@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "583433786951",
+    "firebase_url": "https://internet-of-tomato-farming-default-rtdb.firebaseio.com",
+    "project_id": "internet-of-tomato-farming",
+    "storage_bucket": "internet-of-tomato-farming.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583433786951:android:736ab38d3fda83d4810362",
+        "android_client_info": {
+          "package_name": "com.ensias.miola.iotf.internet_of_tomato_farming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583433786951-69b446hdt8vc6hnpk7sh93qjr85lffit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw2oNRnd9Tj0N1vgaj_4LBJQisHM9vAAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583433786951-69b446hdt8vc6hnpk7sh93qjr85lffit.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
