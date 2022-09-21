@@ -38,6 +38,9 @@ dependencies:
   shared_preferences: ^2.0.15
   firebase_core: ^1.21.1
   firebase_database: ^9.1.4
+  #syncfusion_flutter_gauges: ^20.2.50
+  syncfusion_flutter_gauges: ^18.1.45
+
 
 dev_dependencies:
   flutter_test:
