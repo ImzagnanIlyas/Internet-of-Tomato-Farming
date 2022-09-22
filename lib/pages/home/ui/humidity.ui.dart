@@ -30,7 +30,7 @@ class _HumidityGadgetState extends State<HumidityGadget> {
                 pointers: <GaugePointer>[
                   RangePointer(
                       value: 70,
-                      width: 20,
+                      width: 10,
                       color: Colors.lightBlueAccent,
                       cornerStyle: CornerStyle.bothCurve
                   ),
@@ -46,7 +46,7 @@ class _HumidityGadgetState extends State<HumidityGadget> {
                       widget: Text('70 %',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 50,
+                              fontSize: 20,
                               color: Colors.lightBlueAccent
                           )
                       )

@@ -40,6 +40,8 @@ dependencies:
   firebase_database: ^9.1.4
   #syncfusion_flutter_gauges: ^20.2.50
   syncfusion_flutter_gauges: ^18.1.45
+  accordion: ^2.3.0
+
 
 
 dev_dependencies:

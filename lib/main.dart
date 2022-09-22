@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-      initialRoute: (isLogged) ? '/home': '/qr',
+        initialRoute: '/home'
+      //initialRoute: (isLogged) ? '/home': '/qr',
     );
   }
 }

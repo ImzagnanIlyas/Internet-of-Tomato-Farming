@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class TemperatureGadget extends StatefulWidget {
+class PhGadget extends StatefulWidget {
   @override
-  State<TemperatureGadget> createState() => _TemperatureGadgetState();
+  State<PhGadget> createState() => _PhState();
 }
-class _TemperatureGadgetState extends State<TemperatureGadget> {
+class _PhState extends State<PhGadget> {
   @override
   Widget build(BuildContext context) {
     return SfRadialGauge(
@@ -21,7 +21,7 @@ class _TemperatureGadgetState extends State<TemperatureGadget> {
             axisLabelStyle: GaugeTextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 13),
-            radiusFactor: 0.97,
+            radiusFactor: 1.2,
             majorTickStyle: MajorTickStyle(
                 length: 0.1,
                 thickness: 2,
@@ -30,11 +30,8 @@ class _TemperatureGadgetState extends State<TemperatureGadget> {
                 length: 0.05,
                 thickness: 1.5,
                 lengthUnit: GaugeSizeUnit.factor),
-            minimum: 10,
-            maximum: 37,
-            interval: 3,
-            startAngle: 115,
-            endAngle: 65,
+            startAngle: 180,
+            endAngle: 0,
             ranges: <GaugeRange>[
               GaugeRange(
                   startValue: 10,
@@ -71,23 +68,16 @@ class _TemperatureGadgetState extends State<TemperatureGadget> {
                   tailStyle: TailStyle(length: 0.18, width: 8,
                       color: Colors.black,
                       lengthUnit: GaugeSizeUnit.factor),
-                  needleLength: 0.68,
+                  needleLength: 0.4,
                   needleStartWidth: .5,
-                  needleEndWidth: 8,
+                  needleEndWidth: 4,
                   knobStyle: KnobStyle(knobRadius: 0.07,
                       color: Colors.white, borderWidth: 0.05,
                       borderColor: Colors.black),
                   lengthUnit: GaugeSizeUnit.factor)
             ],
             annotations: <GaugeAnnotation>[
-              GaugeAnnotation(
-                  widget: Text(
-                    '°C',
-                    style:
-                    TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-                  ),
-                  positionFactor: 0.8,
-                  angle: 90)
+
             ],
           ),
         ],
