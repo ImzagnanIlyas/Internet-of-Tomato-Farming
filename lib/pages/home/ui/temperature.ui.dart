@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class TemperatureGadget extends StatefulWidget {
+  var valueTemp;
+
+  TemperatureGadget(this.valueTemp, {Key? key}) : super(key: key);
+
   @override
-  State<TemperatureGadget> createState() => _TemperatureGadgetState();
+  State<TemperatureGadget> createState() => _TemperatureGadgetState(valueTemp);
 }
 class _TemperatureGadgetState extends State<TemperatureGadget> {
+  var valueTemp;
+
+
+  _TemperatureGadgetState(this.valueTemp);
+
   @override
   Widget build(BuildContext context) {
     return SfRadialGauge(
@@ -67,7 +76,7 @@ class _TemperatureGadgetState extends State<TemperatureGadget> {
             ],
             pointers: <GaugePointer>[
               NeedlePointer(
-                  value: -60, needleColor: Colors.black,
+                  value: valueTemp, needleColor: Colors.black,
                   tailStyle: TailStyle(length: 0.18, width: 8,
                       color: Colors.black,
                       lengthUnit: GaugeSizeUnit.factor),

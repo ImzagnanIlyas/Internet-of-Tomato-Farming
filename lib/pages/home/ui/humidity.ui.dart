@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HumidityGadget extends StatefulWidget {
-  const HumidityGadget({Key? key}) : super(key: key);
+  var valueHumidity;
+
+  HumidityGadget(this.valueHumidity);
 
   @override
-  State<HumidityGadget> createState() => _HumidityGadgetState();
+  State<HumidityGadget> createState() => _HumidityGadgetState(valueHumidity);
 }
 
 class _HumidityGadgetState extends State<HumidityGadget> {
+  var valueHumidity;
+
+
+  _HumidityGadgetState(this.valueHumidity);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -43,7 +50,7 @@ class _HumidityGadgetState extends State<HumidityGadget> {
                 annotations: <GaugeAnnotation>[
                   GaugeAnnotation(
                       axisValue: 50,
-                      widget: Text('70 %',
+                      widget: Text(valueHumidity.toString()+' %',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
