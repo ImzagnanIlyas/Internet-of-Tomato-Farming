@@ -43,6 +43,9 @@ dependencies:
   accordion: ^2.3.0
   get_it: ^7.2.0
   fluttertoast: ^8.0.9
+  material_segmented_control: ^3.1.2
+  google_fonts: ^3.0.1
+
 
 
 
