@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home.page.dart';
 import 'package:internet_of_tomato_farming/pages/qrViewPage.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
+import 'package:internet_of_tomato_farming/shared/notificationService.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   bool isLogged = await DeviceRepo.initializeFirebase();
   runApp(MyApp(isLogged: isLogged));
 }
 
 class MyApp extends StatelessWidget {
+
   MyApp({Key? key, required this.isLogged}) : super(key: key);
   bool isLogged = false;
 

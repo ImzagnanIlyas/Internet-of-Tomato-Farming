@@ -20,14 +20,13 @@ class _PlantStatusTabState extends State<PlantStatusTab> {
       child: Column(
         children: [
           Stack(
-            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
              Align(alignment:Alignment.bottomCenter,child: CircleAvatar(
                 backgroundColor: Colors.lightGreen,
                 radius: 160,
                 child: ClipOval(
                   child: Image.network(
-                    'https://www.thespruce.com/thmb/iGx8FNUqlKjnl3OQFHxS0rebj5o=/941x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/top-tomato-growing-tips-1402587-11-c6d6161716fd448fbca41715bbffb1d9.jpg',
+                    'https://greenfarmer.ma/wp-content/uploads/2022/03/white-blooming-strawberry-flowers-with-green-leaves-grow-on-bed-in-garden-in-sunny-summer-day-organic-farm-vitamins-scaled.jpg',
                     width: 310,
                     height: 310,
                     fit: BoxFit.fill,
@@ -41,10 +40,10 @@ class _PlantStatusTabState extends State<PlantStatusTab> {
                   child: ElevatedButton(
                     child:  Row(
                       children: [
-                        Text('Status : ', style: TextStyle(
-                             fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
-                      Text('Healthy', style: TextStyle(
-                                   fontSize: 20, fontWeight: FontWeight.normal, color: Colors.white),),
+                        Text('Status : ', style: GoogleFonts.montserrat(
+                             fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                      Text('Healthy', style: GoogleFonts.montserrat(
+                                   fontSize: 18, fontWeight: FontWeight.normal, color: Colors.white),),
                       ],
                     ),
                     onPressed: () {},
@@ -65,12 +64,12 @@ class _PlantStatusTabState extends State<PlantStatusTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Details : ', style: GoogleFonts.merriweather(
+                Text('Details : ', style: GoogleFonts.montserrat(
                     fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
                 SizedBox(
                   height: 5,
                 ),
-                Text('Oh I don’t know I never even knew her name but I will say this: the nature of them vocal intonations and the play of feelin upon her face helped me to gather that people are like ferrets.', style : GoogleFonts.merriweather(fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),),
+                Text('Oh I don’t know I never even knew her name but I will say this: the nature of them vocal intonations and the play of feelin upon her face helped me to gather that people are like ferrets.', style : GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),),
               ],
             ),
           )

@@ -45,6 +45,10 @@ dependencies:
   fluttertoast: ^8.0.9
   material_segmented_control: ^3.1.2
   google_fonts: ^3.0.1
+  flutter_local_notifications: ^8.0.0
+  timezone: ^0.7.0
+
+
 
 
 

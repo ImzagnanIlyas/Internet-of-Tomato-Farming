@@ -1,13 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/plantStatus.page.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/sensors.page.dart';
-import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
-
-import '../shared/toasts.dart';
-
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,9 +14,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _currentSelection = 0;
+  late Timer timer;
 
   List<Dht11Model> dht11Data = [];
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +27,16 @@ class _HomePageState extends State<HomePage> {
         ),
         Text(
           'Sensors Data',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          style:
+              GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 17),
         ),
         SizedBox(
           width: 5,
         ),
-        Icon(Icons.sensors, size: 15,),
+        Icon(
+          Icons.sensors,
+          size: 20,
+        ),
         SizedBox(
           width: 5,
         )
@@ -45,12 +47,16 @@ class _HomePageState extends State<HomePage> {
         ),
         Text(
           'Plant Status',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          style:
+              GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 17),
         ),
         SizedBox(
           width: 5,
         ),
-        Icon(Icons.ac_unit, size: 15,),
+        Icon(
+          Icons.ac_unit,
+          size: 20,
+        ),
         SizedBox(
           width: 5,
         )
@@ -59,9 +65,18 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
-        backgroundColor: Colors.lightGreen,
-      ),
+          title: Text('Home'),
+          backgroundColor: Colors.lightGreen,
+          actions: <Widget>[
+            Stack(
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.notifications_active, size: 30,),
+                    onPressed: () {
+                    }),
+              ],
+            ),
+          ]),
       body: ListView(children: [
         MaterialSegmentedControl(
           children: _children,
@@ -80,7 +95,6 @@ class _HomePageState extends State<HomePage> {
         ),
         if (_currentSelection == 0) SensorTab(),
         if (_currentSelection == 1) PlantStatusTab(),
-
       ]),
     );
   }

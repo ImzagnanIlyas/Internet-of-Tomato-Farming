@@ -33,7 +33,7 @@ class DeviceRepo {
 
   Query getTemperatureAndHumidityData() {
     //TODO to be removed
-    uid = '199908189';
+    uid = '1999';
     final Query dht11History = FirebaseDatabase.instance.reference().
     child('devices').child(uid!).child("DHT11").orderByChild('dateInt');
     return dht11History;
