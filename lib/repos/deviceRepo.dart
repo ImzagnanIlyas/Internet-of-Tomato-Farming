@@ -39,6 +39,23 @@ class DeviceRepo {
     return dht11History;
   }
 
+  Query getPhData() {
+    //TODO to be removed
+    uid = '1999';
+    final Query dht11History = FirebaseDatabase.instance.reference().
+    child('devices').child(uid!).child("Ph").orderByChild('dateInt');
+    return dht11History;
+  }
+
+  Query getMoistureData() {
+    //TODO to be removed
+    uid = '1999';
+    final Query dht11History = FirebaseDatabase.instance.reference().
+    child('devices').child(uid!).child("Moisture").orderByChild('dateInt');
+    return dht11History;
+  }
+
+
 
 
 }

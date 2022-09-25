@@ -47,6 +47,7 @@ dependencies:
   google_fonts: ^3.0.1
   flutter_local_notifications: ^8.0.0
   timezone: ^0.7.0
+  font_awesome_flutter: ^10.2.1
 
 
 

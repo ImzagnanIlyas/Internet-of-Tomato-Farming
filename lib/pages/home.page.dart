@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _currentSelection = 0;
+  var _currentSelection = 1;
   late Timer timer;
 
   List<Dht11Model> dht11Data = [];

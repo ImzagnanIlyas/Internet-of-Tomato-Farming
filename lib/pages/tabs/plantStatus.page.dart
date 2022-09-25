@@ -22,7 +22,7 @@ class _PlantStatusTabState extends State<PlantStatusTab> {
           Stack(
             children: [
              Align(alignment:Alignment.bottomCenter,child: CircleAvatar(
-                backgroundColor: Colors.lightGreen,
+                backgroundColor: Random().nextBool() == true ? Colors.lightGreen : Colors.red,
                 radius: 160,
                 child: ClipOval(
                   child: Image.network(
