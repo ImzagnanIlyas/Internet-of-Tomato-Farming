@@ -40,26 +40,21 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> showNotification(String title, String body) async {
-    // the date of the appointment acts as the id of it
-    String dateIntString  = DateFormat('yyyy/MM/dd').format(tz.TZDateTime.now(tz.local)).replaceAll('/', '');
-    int dateInt = int.parse(dateIntString);
-    print('dateInt in showNotification $dateInt');
+  Future<void> showNotification(int id, String title, String body) async {
+    String dateIntString  = DateFormat('yyyyMMdd').format(tz.TZDateTime.now(tz.local)); // 235,959,999
+    int notifId = int.parse(id.toString()+dateIntString);
+    print('dateInt in showNotification $notifId');
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      dateInt,
+      notifId,
       title,
       body,
       tz.TZDateTime.now(tz.local).add(Duration(days: 0, seconds : 1)), //schedule the notification to show after
-      const NotificationDetails(
-        // Android details
-        android: AndroidNotificationDetails('main_channel', 'Main Channel', 'ashwin'),
-        // AndroidNotificationDetails('main_channel', 'Main Channel',
-        //     channelDescription: "ashwin",
-        //     importance: Importance.max,
-        //     priority: Priority.max)
-        // iOS details
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+            'main_channel', 'Main Channel', 'ashwin',
+            styleInformation: BigTextStyleInformation(body)
+        ),
         iOS: IOSNotificationDetails(
-          sound: 'default.wav',
           presentAlert: true,
           presentBadge: true,
           presentSound: true,

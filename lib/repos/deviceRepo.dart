@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:internet_of_tomato_farming/shared/extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DeviceRepo {
@@ -39,6 +40,16 @@ class DeviceRepo {
     return dht11History;
   }
 
+  Query getDht11DataLast15min() {
+    //TODO to be removed
+    uid = '1999';
+    DateTime before15min = DateTime.now().subtract(const Duration(minutes: 15));
+    final Query dht11History = FirebaseDatabase.instance.reference()
+        .child('devices').child(uid!).child("DHT11").orderByChild('Date')
+        .startAt(before15min.toDateInt());
+    return dht11History;
+  }
+
   Query getPhData() {
     //TODO to be removed
     uid = '1999';
@@ -54,8 +65,4 @@ class DeviceRepo {
     child('devices').child(uid!).child("Moisture").orderByChild('dateInt');
     return dht11History;
   }
-
-
-
-
 }
