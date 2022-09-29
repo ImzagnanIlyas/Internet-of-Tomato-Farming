@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home.page.dart';
+import 'package:internet_of_tomato_farming/pages/notifDisplay/phNotifDisplay.page.dart';
+import 'package:internet_of_tomato_farming/pages/notifDisplay/temp&HumNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/qrViewPage.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
+import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 import 'package:internet_of_tomato_farming/shared/notificationService.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -21,6 +24,9 @@ class MyApp extends StatelessWidget {
   static final Map<String, Widget Function(BuildContext)> routes = {
     '/qr': (context) => QRViewPage(),
     '/home': (context) => HomePage(),
+    '/tempAndHumNotifDisplay': (context) => TempAndHumNotifDisplay(StatusTemp.Low, 39, 16),
+    '/phNotifDisplay': (context) => PhNotifDisplay(),
+
   };
 
   @override
@@ -32,7 +38,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-        initialRoute: '/home'
+        initialRoute: '/phNotifDisplay'
       //initialRoute: (isLogged) ? '/home': '/qr',
     );
   }

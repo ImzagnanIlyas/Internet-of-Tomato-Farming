@@ -1,6 +1,7 @@
 import '../shared/notificationService.dart';
 
 enum StatusTemp {High, Low, Good, Ideal}
+enum StatusPh {Acidic, Alkaline}
 
 class SensorsServices {
 

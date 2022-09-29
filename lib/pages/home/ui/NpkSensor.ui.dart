@@ -55,8 +55,6 @@ class _NpkSensorState extends State<NpkSensor> {
             ],
           ),
         ),
-
-        //////////////
         Padding(
           padding: const EdgeInsets.only(left: 30.0),
           child: Row(
@@ -95,8 +93,6 @@ class _NpkSensorState extends State<NpkSensor> {
             ],
           ),
         ),
-
-        ///////////
         Padding(
           padding: const EdgeInsets.only(left: 30.0),
           child: Row(
