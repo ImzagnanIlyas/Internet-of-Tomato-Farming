@@ -65,4 +65,7 @@ class DeviceRepo {
     child('devices').child(uid!).child("Moisture").orderByChild('dateInt');
     return dht11History;
   }
+
+
+
 }

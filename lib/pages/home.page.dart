@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_beautiful_popup/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/plantStatus.page.dart';
@@ -17,6 +18,13 @@ class _HomePageState extends State<HomePage> {
   late Timer timer;
 
   List<Dht11Model> dht11Data = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

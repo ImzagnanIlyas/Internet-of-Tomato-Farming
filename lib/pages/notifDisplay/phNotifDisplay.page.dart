@@ -7,14 +7,23 @@ import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class PhNotifDisplay extends StatefulWidget {
+  double valuePh;
+  StatusPh phStatus;
+
+
+  PhNotifDisplay(this.valuePh, this.phStatus);
+
   @override
-  State<PhNotifDisplay> createState() => _PhNotifDisplayState();
+  State<PhNotifDisplay> createState() => _PhNotifDisplayState(valuePh, phStatus);
 }
 
 class _PhNotifDisplayState extends State<PhNotifDisplay> {
   double width = 0.4;
-  double valuePh = 11.5;
-  late StatusPh phStatus = StatusPh.Acidic;
+  double valuePh;
+  late StatusPh phStatus;
+
+
+  _PhNotifDisplayState(this.valuePh, this.phStatus);
 
   @override
   Widget build(BuildContext context) {

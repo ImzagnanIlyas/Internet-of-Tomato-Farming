@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/phNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/temp&HumNotifDisplay.page.dart';
+import 'package:internet_of_tomato_farming/pages/npk/npkForm.ui.dart';
 import 'package:internet_of_tomato_farming/pages/qrViewPage.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:internet_of_tomato_farming/services/sensors.services.dart';
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
     '/qr': (context) => QRViewPage(),
     '/home': (context) => HomePage(),
     '/tempAndHumNotifDisplay': (context) => TempAndHumNotifDisplay(StatusTemp.Low, 39, 16),
-    '/phNotifDisplay': (context) => PhNotifDisplay(),
+    '/phNotifDisplay': (context) => PhNotifDisplay(11.1, StatusPh.Acidic),
+    '/npkForm': (context) => NpkForm(),
 
   };
 
@@ -64,8 +66,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-        initialRoute: '/phNotifDisplay'
+      initialRoute: '/npkForm',
+        //initialRoute: '/phNotifDisplay'
       //initialRoute: (isLogged) ? '/home': '/qr',
     );
   }
+
 }
