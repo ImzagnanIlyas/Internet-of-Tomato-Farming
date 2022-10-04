@@ -170,7 +170,7 @@ class _TempAndHumNotifDisplayState extends State<TempAndHumNotifDisplay> {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.white)),
-                    content: tempStatus == StatusTemp.High ? Text('Hot temperature and dry winds cause excessive flower drop.', style: GoogleFonts.montserrat(
+                    content: tempStatus == StatusTemp.High ? Text('High temperature and dry winds cause excessive flower drop.', style: GoogleFonts.montserrat(
                         fontSize: 15,
                         fontWeight: FontWeight.normal,
                         color: Colors.black)):

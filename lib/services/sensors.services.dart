@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 enum StatusTemp {High, Low, Good, Ideal, None}
 enum StatusPh {Acidic, Alkaline}
 enum StatusNpk {N, P, K}
+enum ConditionNpk {High, Low, Good}
+enum PlantGrowthStage{Stage1, Stage2, Stage3}
 
 class SensorsServices {
 
@@ -61,17 +63,17 @@ class SensorsServices {
     List<double> secondInterval = [6,12];
     List<double> thirdInterval = [13,20];
 
-    dynamic firstIntervalNitrogenValues = {'operator' :  'Min', 'values' : [250]};
-    dynamic firstIntervalPhosphorusValues = {'operator' :  'Min', 'values' : [100]};
-    dynamic firstIntervalPotassiumValues = {'operator' :  'Bet', 'values' : [40,60]};
+    dynamic firstIntervalNitrogenValues = {'operator' :  'Min', 'values' : [95]};
+    dynamic firstIntervalPhosphorusValues = {'operator' :  'Min', 'values' : [68]};
+    dynamic firstIntervalPotassiumValues = {'operator' :  'Min', 'values' : [130]};
 
-    dynamic secondIntervalNitrogenValues = {'operator' :  'Min', 'values' : [250]};
-    dynamic secondIntervalPhosphorusValues = {'operator' :  'Min', 'values' : [100]};
-    dynamic secondIntervalPotassiumValues = {'operator' :  'Bet', 'values' : [40,60]};
+    dynamic secondIntervalNitrogenValues = {'operator' :  'Min', 'values' : [150]};
+    dynamic secondIntervalPhosphorusValues = {'operator' :  'Min', 'values' : [80]};
+    dynamic secondIntervalPotassiumValues = {'operator' :  'Min', 'values' : [240]};
 
-    dynamic thirdIntervalNitrogenValues = {'operator' :  'Min', 'values' : [250]};
-    dynamic thirdIntervalPhosphorusValues = {'operator' :  'Min', 'values' : [100]};
-    dynamic thirdIntervalPotassiumValues = {'operator' :  'Bet', 'values' : [40,60]};
+    dynamic thirdIntervalNitrogenValues = {'operator' :  'Min', 'values' : [220]};
+    dynamic thirdIntervalPhosphorusValues = {'operator' :  'Min', 'values' : [98]};
+    dynamic thirdIntervalPotassiumValues = {'operator' :  'Min', 'values' : [360]};
 
     var intervalNitrogenValues;
     var IntervalPhosphorusValues;
@@ -120,7 +122,6 @@ class SensorsServices {
     }
 
     return results;
-    
   }
 
   int weeksBetween(DateTime from, DateTime to) {
