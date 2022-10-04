@@ -10,6 +10,7 @@ enum StatusPh {Acidic, Alkaline}
 enum StatusNpk {N, P, K}
 enum ConditionNpk {High, Low, Good}
 enum PlantGrowthStage{Stage1, Stage2, Stage3}
+enum MoistureStatus{Good, Moisturized, Dry}
 
 class SensorsServices {
 
@@ -33,6 +34,12 @@ class SensorsServices {
       return StatusTemp.Good;
     }
     return StatusTemp.None;
+  }
+
+  static MoistureStatus moistureFilter(int moistureValue){
+    if(moistureValue < 60 )  return MoistureStatus.Dry;
+    if(moistureValue > 80 )  return MoistureStatus.Moisturized;
+    return MoistureStatus.Good;
   }
 
   /// used in background process

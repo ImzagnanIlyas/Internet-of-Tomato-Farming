@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home.page.dart';
+import 'package:internet_of_tomato_farming/pages/notifDisplay/moistureNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/npkDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/phNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/temp&HumNotifDisplay.page.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
     '/phNotifDisplay': (context) => PhNotifDisplay(11.1, StatusPh.Acidic),
     '/npkNotifDisplay': (context) => NpkNotifDisplay(ConditionNpk.Low, ConditionNpk.Good, ConditionNpk.Low, 20, 30, 28, PlantGrowthStage.Stage1),
     '/npkForm': (context) => NpkForm(),
-
+    '/moistureNotifDisplay': (context) => MoistureNotifDisplay(MoistureStatus.Dry, 30),
   };
 
   @override
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-      initialRoute: '/npkNotifDisplay',
+      initialRoute: '/moistureNotifDisplay',
         //initialRoute: '/phNotifDisplay'
       //initialRoute: (isLogged) ? '/home': '/qr',
     );
