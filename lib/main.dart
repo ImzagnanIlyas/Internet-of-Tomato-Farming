@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-      initialRoute: '/moistureNotifDisplay',
+      initialRoute: '/npkNotifDisplay',
         //initialRoute: '/phNotifDisplay'
       //initialRoute: (isLogged) ? '/home': '/qr',
     );

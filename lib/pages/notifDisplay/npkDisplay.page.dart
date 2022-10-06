@@ -176,7 +176,14 @@ class _NpkNotifDisplayState extends State<NpkNotifDisplay> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 5),
-              child: Image.asset('assets/images/npk.jpg'),
+              child: Card(
+                  shadowColor: Colors.grey,
+                  color: Colors.grey[100],
+                  elevation: 5,
+                child: Image.asset('assets/images/NPK.jpg'),
+              ),
+
+
               // child: Card(
               //   shadowColor: Colors.grey,
               //   color: Colors.grey[100],
