@@ -5,6 +5,7 @@ import 'package:internet_of_tomato_farming/pages/notifDisplay/moistureNotifDispl
 import 'package:internet_of_tomato_farming/pages/notifDisplay/npkDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/phNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/temp&HumNotifDisplay.page.dart';
+import 'package:internet_of_tomato_farming/pages/notifications/notifications.page.dart';
 import 'package:internet_of_tomato_farming/pages/npk/npkForm.ui.dart';
 import 'package:internet_of_tomato_farming/pages/qrViewPage.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
     '/npkNotifDisplay': (context) => NpkNotifDisplay(ConditionNpk.Low, ConditionNpk.Good, ConditionNpk.Low, 20, 30, 28, PlantGrowthStage.Stage1),
     '/npkForm': (context) => NpkForm(),
     '/moistureNotifDisplay': (context) => MoistureNotifDisplay(MoistureStatus.Dry, 30),
+    '/notifications': (context) => NotificationsPage(),
   };
 
   @override
@@ -66,10 +68,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'IoTF',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.lightGreen
       ),
       routes: routes,
-      initialRoute: '/moistureNotifDisplay',
+      initialRoute: '/home',
         //initialRoute: '/phNotifDisplay'
       //initialRoute: (isLogged) ? '/home': '/qr',
     );

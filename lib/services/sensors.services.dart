@@ -1,4 +1,5 @@
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
+import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:internet_of_tomato_farming/shared/preferencesService.dart';
 
@@ -11,29 +12,45 @@ enum StatusNpk {N, P, K}
 enum ConditionNpk {High, Low, Good}
 enum PlantGrowthStage{Stage1, Stage2, Stage3}
 enum MoistureStatus{Good, Moisturized, Dry}
+enum SensorType{dht11, moisture, pH, npk}
 
 class SensorsServices {
 
   static const int ID_TEMP = 1;
   final preferenceService = PreferencesService();
 
-  static StatusTemp FilterTemperatureAndTriggerNotif(int temperature){
-
+  void FilterTemperatureAndTriggerNotif(int temperature, int humidity){
+    SensorType type = SensorType.dht11;
+    Map<String, dynamic> value = {
+      'temperature': temperature,
+      'humidity': humidity
+    };
     if(temperature < 12) {
-      NotificationService().showNotification(ID_TEMP,"Low Temperature : $temperature", "The temperature of your plant is low, click on the notification tio see more details");
-      return StatusTemp.Low;
+      StatusTemp status = StatusTemp.Low;
+      String title = "Low Temperature : $temperature";
+      String body = "The temperature of your plant is low, click on the notification tio see more details";
+      NotificationService().showNotification(
+        ID_TEMP,
+        title,
+        body
+      );
+      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
+      return ;
     }
     if(temperature > 35) {
-      NotificationService().showNotification(ID_TEMP,"High Temperature : $temperature", "The temperature of your plant is high, click on the notification tio see more details");
-      return StatusTemp.High;
+      StatusTemp status = StatusTemp.High;
+      String title = "High Temperature : $temperature";
+      String body = "The temperature of your plant is high, click on the notification tio see more details";
+      NotificationService().showNotification(ID_TEMP,title, body);
+      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
     }
-    if(temperature >= 20 && temperature <= 24){
-      return StatusTemp.Ideal;
-    }
-    if(temperature > 12 && temperature < 24){
-      return StatusTemp.Good;
-    }
-    return StatusTemp.None;
+    // if(temperature >= 20 && temperature <= 24){
+    //   return StatusTemp.Ideal;
+    // }
+    // if(temperature > 12 && temperature < 24){
+    //   return StatusTemp.Good;
+    // }
+    // return StatusTemp.None;
   }
 
   static MoistureStatus moistureFilter(int moistureValue){
@@ -48,7 +65,7 @@ class SensorsServices {
     if(values != null) {
       values.forEach((key, value) {
         Dht11Model data = Dht11Model.fromJson(value);
-        FilterTemperatureAndTriggerNotif(data.temperature);
+        FilterTemperatureAndTriggerNotif(data.temperature, data.humidity);
       });
     }
   }

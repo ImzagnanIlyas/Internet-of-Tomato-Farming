@@ -81,6 +81,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                     icon: Icon(Icons.notifications_active, size: 30,),
                     onPressed: () {
+                      Navigator.pushNamed(context, '/notifications');
                     }),
               ],
             ),
