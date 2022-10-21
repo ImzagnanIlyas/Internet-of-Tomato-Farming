@@ -177,18 +177,6 @@ class _PhState extends State<PhGadget> {
                     sizeUnit: GaugeSizeUnit.factor
                 )
               ),
-              // NeedlePointer(
-              //     value: -60, needleColor: Colors.black,
-              //     tailStyle: TailStyle(length: 0.18, width: 8,
-              //         color: Colors.black,
-              //         lengthUnit: GaugeSizeUnit.factor),
-              //     needleLength: 0.4,
-              //     needleStartWidth: .5,
-              //     needleEndWidth: 4,
-              //     knobStyle: KnobStyle(knobRadius: 0.07,
-              //         color: Colors.white, borderWidth: 0.05,
-              //         borderColor: Colors.black),
-              //     lengthUnit: GaugeSizeUnit.factor)
             ],
             annotations: <GaugeAnnotation>[
 

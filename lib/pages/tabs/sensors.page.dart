@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home/ui/NpkSensor.ui.dart';
+import 'package:internet_of_tomato_farming/pages/models/npk.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/ph.model.dart';
 import 'package:internet_of_tomato_farming/shared/notificationService.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +29,25 @@ class _SensorTabState extends State<SensorTab> {
   List<Dht11Model> dht11Data = [];
   List<MoistureModel> moistureData = [];
   List<PhModel> phData = [];
+  List<NPKModel> npkData = [];
+
+  late String _now;
+  late Timer _everySecond;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _now = DateTime.now().second.toString();
+
+    // defines a timer
+    _everySecond = Timer.periodic(Duration(seconds: 2000), (Timer t) {
+      setState(() {
+        _now = DateTime.now().second.toString();
+        print(_now);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +75,6 @@ class _SensorTabState extends State<SensorTab> {
                           dht11Data.add(data);
                           // print(data);
                         });
-                        // SensorsServices.FilterTemperatureAndTriggerNotif(
-                        //     dht11Data.last.temperature.toDouble());
                       }
                       print(dht11Data);
                       print(dht11Data.last);
@@ -208,8 +228,7 @@ class _SensorTabState extends State<SensorTab> {
                                     width: 170.0,
                                     height: 180,
                                     //height: 300,
-                                    child:
-                                        PhGadget(phData.last.value.toDouble()),
+                                    child: PhGadget(phData.last.value.toDouble()),
                                   ),
                                 ),
                               ],
@@ -221,35 +240,61 @@ class _SensorTabState extends State<SensorTab> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8, left: 8, top: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Text('NPK Sensor',
-                            style: GoogleFonts.montserrat(
-                                fontSize: 17, fontWeight: FontWeight.bold)),
-                        Card(
-                          shadowColor: Colors.grey,
-                          color: Colors.white,
-                          elevation: 5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                            child: SizedBox(
-                              width: 260.0,
-                              height: 180,
-                              //height: 300,
-                              child: NpkSensor()
-                            ),
-                          ),
+              FutureBuilder(
+                  future: _deviceRepo.getNpkData().once(),
+                  builder:
+                      (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                        npkData.clear();
+                    if (snapshot.hasData) {
+                      Map<dynamic, dynamic> values = snapshot.data!.value;
+                      if (values == null) {
+                        NPKModel data = NPKModel(0, 0, 0, 0);
+                        npkData.add(data);
+                        _toast.showMsg('No NPK data to be shown');
+                      } else {
+                        values.forEach((key, values) {
+                          NPKModel data = NPKModel.fromJson(values);
+                          npkData.add(data);
+                          print(data);
+                        });
+                        // SensorsServices.FilterTemperatureAndTriggerNotif(
+                        //     moistureData.last.value.toDouble());
+                      }
+                      print(npkData);
+                      print(npkData.last);
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8, left: 8, top: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Text('NPK Sensor',
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 17, fontWeight: FontWeight.bold)),
+                                Card(
+                                  shadowColor: Colors.grey,
+                                  color: Colors.white,
+                                  elevation: 5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                    child: SizedBox(
+                                        width: 260.0,
+                                        height: 180,
+                                        //height: 300,
+                                        child: NpkSensor(npkData.last.n.toString(), npkData.last.p.toString(), npkData.last.k.toString())
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                      );
+                    }
+                    return const Center(
+                        child: CircularProgressIndicator());
+                  }),
             ],
           ),
         ],

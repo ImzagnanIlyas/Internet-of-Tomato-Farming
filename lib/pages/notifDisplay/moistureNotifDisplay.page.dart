@@ -75,7 +75,7 @@ class _MoistureNotifDisplayState extends State<MoistureNotifDisplay> {
                       children: [
                         moistureStatus == MoistureStatus.Moisturized ? Text('The soil is over moisturized',
                             style: GoogleFonts.montserrat(
-                                fontSize: 22,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black)) : Text('The soil is too dry.',
                             style: GoogleFonts.montserrat(

@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
       routes: routes,
       initialRoute: '/home',
         //initialRoute: '/phNotifDisplay'
-      //initialRoute: (isLogged) ? '/home': '/qr',
+      // initialRoute: (isLogged) ? '/home': '/qr',
     );
   }
 

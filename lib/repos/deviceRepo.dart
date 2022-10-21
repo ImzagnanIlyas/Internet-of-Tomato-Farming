@@ -54,7 +54,7 @@ class DeviceRepo {
     //TODO to be removed
     uid = '1999';
     final Query dht11History = FirebaseDatabase.instance.reference().
-    child('devices').child(uid!).child("Ph").orderByChild('dateInt');
+    child('devices').child(uid!).child("Ph").orderByChild('Date');
     return dht11History;
   }
 
@@ -62,10 +62,25 @@ class DeviceRepo {
     //TODO to be removed
     uid = '1999';
     final Query dht11History = FirebaseDatabase.instance.reference().
-    child('devices').child(uid!).child("Moisture").orderByChild('dateInt');
+    child('devices').child(uid!).child("Moisture").orderByChild('Date');
     return dht11History;
   }
 
+  Query getNpkData() {
+    //TODO to be removed
+    uid = '1999';
+    final Query npkHistory = FirebaseDatabase.instance.reference().
+    child('devices').child(uid!).child("NPK").orderByChild('Date');
+    return npkHistory;
+  }
+
+  Query getDiseaseData() {
+    //TODO to be removed
+    uid = '1999';
+    final Query npkHistory = FirebaseDatabase.instance.reference().
+    child('devices').child(uid!).child("Classification").orderByChild('dateInt');
+    return npkHistory;
+  }
 
 
 }

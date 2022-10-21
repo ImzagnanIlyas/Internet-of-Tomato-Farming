@@ -7,7 +7,7 @@ import '../shared/notificationService.dart';
 import 'package:intl/intl.dart';
 
 enum StatusTemp {High, Low, Good, Ideal, None}
-enum StatusPh {Acidic, Alkaline}
+enum StatusPh {Acidic, Alkaline, Good}
 enum StatusNpk {N, P, K}
 enum ConditionNpk {High, Low, Good}
 enum PlantGrowthStage{Stage1, Stage2, Stage3}
@@ -44,19 +44,18 @@ class SensorsServices {
       NotificationService().showNotification(ID_TEMP,title, body);
       NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
     }
-    // if(temperature >= 20 && temperature <= 24){
-    //   return StatusTemp.Ideal;
-    // }
-    // if(temperature > 12 && temperature < 24){
-    //   return StatusTemp.Good;
-    // }
-    // return StatusTemp.None;
   }
 
   static MoistureStatus moistureFilter(int moistureValue){
     if(moistureValue < 60 )  return MoistureStatus.Dry;
     if(moistureValue > 80 )  return MoistureStatus.Moisturized;
     return MoistureStatus.Good;
+  }
+
+  static StatusPh phFilter(int phValue){
+    if(phValue < 6)  return StatusPh.Acidic;
+    if(phValue > 8)  return StatusPh.Alkaline;
+    else return StatusPh.Good;
   }
 
   /// used in background process

@@ -17,12 +17,13 @@ class _HomePageState extends State<HomePage> {
   var _currentSelection = 1;
   late Timer timer;
 
-  List<Dht11Model> dht11Data = [];
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
   }
 
 
