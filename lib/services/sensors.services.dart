@@ -222,8 +222,9 @@ class SensorsServices {
 
   void npkDataObserver(NPKModel data) async{
     PreferencesService service = PreferencesService();
-    await service.savePlantingDate(DateTime.now());
-    await service.saveMassSoil(150);
+    // FOR TEST
+    // await service.savePlantingDate(DateTime.now());
+    // await service.saveMassSoil(150);
     var plantingDate = await service.getPlantingDate();
     var massOfSoil = await service.getMassSoil();
     if(plantingDate != null && massOfSoil != null){
