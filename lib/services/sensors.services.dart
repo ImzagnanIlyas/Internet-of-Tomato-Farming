@@ -1,4 +1,5 @@
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
+import 'package:internet_of_tomato_farming/pages/models/moisture.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:internet_of_tomato_farming/shared/preferencesService.dart';
@@ -17,6 +18,7 @@ enum SensorType{dht11, moisture, pH, npk}
 class SensorsServices {
 
   static const int ID_TEMP = 1;
+  static const int ID_MOISTURE = 2;
   final preferenceService = PreferencesService();
 
   StatusTemp FilterTemperatureAndTriggerNotif(int temperature, int humidity){
@@ -151,6 +153,31 @@ class SensorsServices {
       NotificationService notificationService = NotificationService();
       notificationService.showNotification(ID_TEMP, title, body);
       notificationService.saveNotification(type, status, value, title, body, false, DateTime.now());
+    }
+  }
+
+  Future moistureDataCallbackDispatcher() async{
+    var values = (await DeviceRepo().getMoistureDataLast15min().once()).value;
+    if(values != null) {
+      values.forEach((key, value) {
+        MoistureModel data = MoistureModel.fromJson(value);
+        moistureDataObserver(data.value);
+      });
+    }
+  }
+
+  void moistureDataObserver(int value){
+    MoistureStatus status = moistureFilter(value);
+    if(status==MoistureStatus.Dry || status==MoistureStatus.Moisturized){
+      SensorType type = SensorType.moisture;
+      String title = "Low Moisture : "+value.toString()+'%';
+      String body = "The soil is over moisturized, click on the notification tio see more details";
+      if(status==MoistureStatus.Moisturized) {
+        title = "High Moisture : "+value.toString()+'%';
+        body = "The soil is dry, click on the notification tio see more details";
+      }
+      NotificationService().showNotification(ID_MOISTURE, title, body);
+      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
     }
   }
 }

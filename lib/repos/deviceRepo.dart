@@ -62,8 +62,18 @@ class DeviceRepo {
     //TODO to be removed
     uid = '1999';
     final Query dht11History = FirebaseDatabase.instance.reference().
-    child('devices').child(uid!).child("Moisture").orderByChild('Date');
+    child('devices').child(uid!).child("Moisture").orderByChild('Date').limitToLast(1);
     return dht11History;
+  }
+
+  Query getMoistureDataLast15min() {
+    //TODO to be removed
+    uid = '1999';
+    DateTime before15min = DateTime.now().subtract(const Duration(minutes: 15));
+    final Query history = FirebaseDatabase.instance.reference()
+        .child('devices').child(uid!).child("Moisture").orderByChild('Date')
+        .startAt(before15min.toDateInt());
+    return history;
   }
 
   Query getNpkData() {
