@@ -90,8 +90,18 @@ class DeviceRepo {
     //TODO to be removed
     uid = '1999';
     final Query npkHistory = FirebaseDatabase.instance.reference().
-    child('devices').child(uid!).child("NPK").orderByChild('Date');
+    child('devices').child(uid!).child("NPK").orderByChild('Date').limitToLast(1);
     return npkHistory;
+  }
+
+  Query getNpkDataLast15min() {
+    //TODO to be removed
+    uid = '1999';
+    DateTime before15min = DateTime.now().subtract(const Duration(minutes: 15));
+    final Query history = FirebaseDatabase.instance.reference()
+        .child('devices').child(uid!).child("NPK").orderByChild('Date')
+        .startAt(before15min.toDateInt());
+    return history;
   }
 
   Query getDiseaseData() {

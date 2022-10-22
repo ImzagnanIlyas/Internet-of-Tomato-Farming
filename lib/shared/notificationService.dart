@@ -131,6 +131,11 @@ class NotificationService {
 
     if(tmp.isEmpty
         || (type == SensorType.dht11 && tmp.first.value['temperature'] != value['temperature'])
+        || (type == SensorType.moisture && tmp.first.value != value)
+        || (type == SensorType.pH && tmp.first.value != value)
+        || (type == SensorType.npk && (tmp.first.value['nitrogenValue'] != value['nitrogenValue']
+            || tmp.first.value['phosphorusValue'] != value['phosphorusValue']
+            || tmp.first.value['potassiumValue'] != value['potassiumValue']))
     ){
       int id = getLastId();
       NotificationModel notification = NotificationModel(id++, type, status, value, title, body, seen, time);

@@ -5,6 +5,7 @@ import 'package:internet_of_tomato_farming/pages/models/ph.model.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:internet_of_tomato_farming/shared/preferencesService.dart';
 
+import '../pages/models/npk.model.dart';
 import '../shared/notificationService.dart';
 import 'package:intl/intl.dart';
 
@@ -21,6 +22,7 @@ class SensorsServices {
   static const int ID_TEMP = 1;
   static const int ID_MOISTURE = 2;
   static const int ID_PH = 3;
+  static const int ID_NPK = 4;
   final preferenceService = PreferencesService();
 
   StatusTemp FilterTemperatureAndTriggerNotif(int temperature, int humidity){
@@ -41,7 +43,7 @@ class SensorsServices {
     else return StatusPh.Good;
   }
 
-  List<dynamic> npkFilter(double N, double P, double K, plantingDateString, massOfSoil) {
+  List<dynamic> npkFilter(int N, int P, int K, plantingDateString, massOfSoil) {
 
     DateTime plantingDate = DateFormat('dd-MM-yyyy').parse(plantingDateString);
     int weekOfPlanting = weeksBetween(plantingDate, DateTime.now());
@@ -206,5 +208,80 @@ class SensorsServices {
       NotificationService().showNotification(ID_PH, title, body);
       NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
     }
+  }
+
+  Future npkDataCallbackDispatcher() async{
+    var values = (await DeviceRepo().getNpkDataLast15min().once()).value;
+    if(values != null) {
+      values.forEach((key, value) {
+        NPKModel data = NPKModel.fromJson(value);
+        npkDataObserver(data);
+      });
+    }
+  }
+
+  void npkDataObserver(NPKModel data) async{
+    PreferencesService service = PreferencesService();
+    await service.savePlantingDate(DateTime.now());
+    await service.saveMassSoil(150);
+    var plantingDate = await service.getPlantingDate();
+    var massOfSoil = await service.getMassSoil();
+    if(plantingDate != null && massOfSoil != null){
+      List<dynamic> results = npkFilter(data.n, data.p, data.k, plantingDate, massOfSoil);
+      print("results length ::: "+results.length.toString());
+      if(results.isNotEmpty){
+        print("results ::: "+results.toString());
+        SensorType type = SensorType.npk;
+        Map<String, dynamic> npkValue = {
+          'nitrogenValue': data.n,
+          'phosphorusValue': data.p,
+          'potassiumValue': data.k
+        };
+        var nC = ConditionNpk.Good;
+        var pC = ConditionNpk.Good;
+        var kC = ConditionNpk.Good;
+        for(dynamic e in results){
+          if(e['nutrient'] == 'N'){
+            nC = ConditionNpk.Low;
+          }
+          if(e['nutrient'] == 'P'){
+            pC = ConditionNpk.Low;
+          }
+          if(e['nutrient'] == 'K'){
+            kC = ConditionNpk.Low;
+          }
+        }
+        Map<String, dynamic> npkStatus = {
+          'nitrogenCondition': nC,
+          'phosphorusCondition': pC,
+          'potassiumCondition': kC,
+          'plantGrowthStage': getPlantGrowthStage(plantingDate)
+        };
+        String title = "Nutrients telemetry data problem";
+        String body = "Click on the notification tio see more details";
+        NotificationService().showNotification(ID_NPK, title, body);
+        NotificationService().saveNotification(type, npkStatus, npkValue, title, body, false, DateTime.now());
+      }
+    }
+  }
+
+  PlantGrowthStage getPlantGrowthStage(String plantingDateString){
+    List<double> firstInterval = [0,5];
+    List<double> secondInterval = [6,12];
+    List<double> thirdInterval = [13,20];
+    DateTime plantingDate = DateFormat('dd-MM-yyyy').parse(plantingDateString);
+    int weekOfPlanting = weeksBetween(plantingDate, DateTime.now());
+
+    if(weekOfPlanting >= firstInterval[0] && weekOfPlanting <= firstInterval[1]){
+      return PlantGrowthStage.Stage1;
+    }
+    if(weekOfPlanting >= secondInterval[0] && weekOfPlanting <= secondInterval[1]){
+      return PlantGrowthStage.Stage2;
+    }
+    if(weekOfPlanting >= thirdInterval[0] && weekOfPlanting <= thirdInterval[1]){
+      return PlantGrowthStage.Stage3;
+    }
+
+    return PlantGrowthStage.Stage1;
   }
 }

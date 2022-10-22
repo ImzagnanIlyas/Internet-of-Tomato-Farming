@@ -237,10 +237,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
       'potassiumValue': 28.3
     };
     Map<String, dynamic> npkStatus = {
-      'nitrogenCondition': ConditionNpk.Low.index,
-      'phosphorusCondition': ConditionNpk.Good.index,
-      'potassiumCondition': ConditionNpk.Low.index,
-      'plantGrowthStage': PlantGrowthStage.Stage1.index
+      'nitrogenCondition': ConditionNpk.Low,
+      'phosphorusCondition': ConditionNpk.Good,
+      'potassiumCondition': ConditionNpk.Low,
+      'plantGrowthStage': PlantGrowthStage.Stage1
     };
     List<NotificationModel> notifications = [
       NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,

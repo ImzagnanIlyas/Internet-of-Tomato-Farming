@@ -37,9 +37,17 @@ class NotificationModel {
   }
 
   Map toJson() {
-    final s = (type == SensorType.npk)
-        ? status
-        : status.index;
+    var s;
+    if(type == SensorType.npk){
+      s = {
+        'nitrogenCondition': status['nitrogenCondition'].index,
+        'phosphorusCondition': status['phosphorusCondition'].index,
+        'potassiumCondition': status['potassiumCondition'].index,
+        'plantGrowthStage': status['plantGrowthStage'].index
+      };
+    }else{
+      s = status.index;
+    }
     return {
       'id': id,
       'type': type.index,
