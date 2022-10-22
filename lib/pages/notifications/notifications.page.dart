@@ -2,11 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/utils.dart';
+import 'package:internet_of_tomato_farming/pages/models/disease.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
+import 'package:internet_of_tomato_farming/pages/notifDisplay/diseaseDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/moistureNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/npkDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/phNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/temp&HumNotifDisplay.page.dart';
+import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 import 'package:internet_of_tomato_farming/shared/extensions.dart';
 import 'package:internet_of_tomato_farming/shared/notificationService.dart';
@@ -21,6 +24,7 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationsPageState extends State<NotificationsPage> {
   late var prefs;
+  int index = 0;
 
   Future<dynamic> initPrefs() async{
     return SharedPreferences.getInstance();
@@ -28,43 +32,54 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Notifications"),
-        backgroundColor: Colors.lightGreen,
-        // actions: [
-        //   IconButton(onPressed: clearData, icon: Icon(Icons.delete)),
-        //   IconButton(onPressed: saveDummyData, icon: Icon(Icons.save_alt)),
-        // ],
-      ),
-      body: FutureBuilder(
-        future: initPrefs(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
-          if(snapshot.hasData){
-            prefs = snapshot.data;
-            return Scrollbar(
-              isAlwaysShown: true,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ListView(children: _buildNotifsWidgets()),
-              )
-            );
-          }else{
-            return const Center();
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Notifications"),
+          backgroundColor: Colors.lightGreen,
+          actions: [
+            IconButton(onPressed: clearData, icon: Icon(Icons.delete)),
+          //   IconButton(onPressed: saveDummyData, icon: Icon(Icons.save_alt)),
+          ],
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'Sensors'),
+              Tab(text: 'Diseases'),
+            ],
+            indicatorWeight: 5,
+            indicatorColor: Colors.white,
+            labelColor: Colors.white,
+            onTap: (i){
+              setState(() {
+                index=i;
+              });
+            },
+          ),
+        ),
+        body: FutureBuilder(
+          future: initPrefs(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
+            if(snapshot.hasData){
+              prefs = snapshot.data;
+              return Scrollbar(
+                isAlwaysShown: true,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListView(children: _buildNotifsWidgets()),
+                )
+              );
+            }else{
+              return const Center();
+            }
           }
-        }
+        ),
       ),
     );
   }
 
   List<Widget> _buildNotifsWidgets(){
     List<NotificationModel> notifications = getNotifications();
-    // String json = prefs.getString('notifications') ?? '[]';
-    // List<dynamic> jsonList = jsonDecode(json);
-    // for(dynamic e in jsonList){
-    //   notifications.add(NotificationModel.fromJson(e));
-    // }
-    notifications.sort((a, b) => b.time.compareTo(a.time));
 
     List<Widget> widgets = [];
     for(NotificationModel e in notifications){
@@ -89,6 +104,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
             e.value['nitrogenValue'], e.value['phosphorusValue'], e.value['potassiumValue'],
             e.status['plantGrowthStage']
         );
+      }else if(e.type == SensorType.disease){
+        nextUI = DiseaseDisplay(diseaseTime: e.time);
       }
       widgets.add(
           ElevatedButton(
@@ -206,6 +223,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
     List<dynamic> jsonList = jsonDecode(json);
     for(dynamic e in jsonList){
       notifications.add(NotificationModel.fromJson(e));
+    }
+    if(index == 0){
+      notifications.retainWhere((element) => element.type!=SensorType.disease);
+    }else{
+      notifications.retainWhere((element) => element.type==SensorType.disease);
     }
     notifications.sort((a, b) => b.time.compareTo(a.time));
 

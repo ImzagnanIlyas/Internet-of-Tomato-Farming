@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:internet_of_tomato_farming/shared/extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class DeviceRepo {
   static late FirebaseApp firebaseApp;
@@ -108,9 +109,32 @@ class DeviceRepo {
     //TODO to be removed
     uid = '1999';
     final Query npkHistory = FirebaseDatabase.instance.reference().
-    child('devices').child(uid!).child("Classification").orderByChild('dateInt');
+    child('devices').child(uid!).child("Classification").orderByChild('dateInt').limitToLast(1);
     return npkHistory;
   }
 
+  Query getDiseaseDataLast15min() {
+    uid = '1999';
+    DateTime before15min = DateTime.now().subtract(const Duration(minutes: 15));
+    final Query history = FirebaseDatabase.instance.reference()
+        .child('devices').child(uid!).child("Classification").orderByChild('dateInt')
+        .startAt(before15min.toDateInt());
+    return history;
+  }
+
+  Query getDiseaseDataByTime(DateTime time) {
+    int dateInt = dateToDateInt(time);
+    //TODO to be removed
+    uid = '1999';
+    final Query npkHistory = FirebaseDatabase.instance.reference().
+    child('devices').child(uid!).child("Classification").orderByChild('dateInt')
+        .equalTo(dateInt);
+    return npkHistory;
+  }
+
+  int dateToDateInt(DateTime date){
+    String s = DateFormat("yMMddHHmmss").format(date);
+    return int.parse(s);
+  }
 
 }

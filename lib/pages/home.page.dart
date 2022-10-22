@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/plantStatus.page.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/sensors.page.dart';
+import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +30,12 @@ class HomePageState extends State<HomePage> {
     SchedulerBinding.instance?.addPostFrameCallback((_){
       if(widget.didNotificationLaunchApp) onNotificationLaunchApp();
     });
+    SensorsServices sensorsService = SensorsServices();
+    sensorsService.dht11DataCallbackDispatcher();
+    sensorsService.moistureDataCallbackDispatcher();
+    sensorsService.phDataCallbackDispatcher();
+    sensorsService.npkDataCallbackDispatcher();
+    sensorsService.diseaseDataCallbackDispatcher();
   }
 
 

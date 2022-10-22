@@ -22,7 +22,9 @@ class NotificationModel {
         ? StatusPh.values[json['status'] as int]
         : (type == SensorType.moisture)
           ? MoistureStatus.values[json['status'] as int]
-          : {
+          : ((type == SensorType.disease))
+            ? json['status']
+            :{
               'nitrogenCondition': ConditionNpk.values[json['status']['nitrogenCondition']],
               'phosphorusCondition': ConditionNpk.values[json['status']['phosphorusCondition']],
               'potassiumCondition': ConditionNpk.values[json['status']['potassiumCondition']],
@@ -45,6 +47,8 @@ class NotificationModel {
         'potassiumCondition': status['potassiumCondition'].index,
         'plantGrowthStage': status['plantGrowthStage'].index
       };
+    }else if(type == SensorType.disease){
+      s = status;
     }else{
       s = status.index;
     }

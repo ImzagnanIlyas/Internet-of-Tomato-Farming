@@ -8,14 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_of_tomato_farming/pages/models/disease.model.dart';
+import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 
 import '../../repos/deviceRepo.dart';
 import '../../shared/toasts.dart';
 
 
 class PlantStatusTab extends StatefulWidget {
-
-  PlantStatusTab();
+  DiseaseModel? NotificationDisease;
+  PlantStatusTab({this.NotificationDisease});
 
   @override
   State<PlantStatusTab> createState() => _PlantStatusTabState();
@@ -51,7 +52,9 @@ class _PlantStatusTabState extends State<PlantStatusTab> {
           diseaseData.clear();
           if (snapshot.hasData) {
             Map<dynamic, dynamic> values = snapshot.data!.value;
-            if (values == null) {
+            if(widget.NotificationDisease != null){
+              diseaseData.add(widget.NotificationDisease as DiseaseModel);
+            }else if (values == null) {
               DiseaseModel data = DiseaseModel('', '', 0);
               diseaseData.add(data);
               _toast.showMsg(

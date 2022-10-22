@@ -1,4 +1,5 @@
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
+import 'package:internet_of_tomato_farming/pages/models/disease.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/moisture.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/ph.model.dart';
@@ -15,7 +16,7 @@ enum StatusNpk {N, P, K}
 enum ConditionNpk {High, Low, Good}
 enum PlantGrowthStage{Stage1, Stage2, Stage3}
 enum MoistureStatus{Good, Moisturized, Dry}
-enum SensorType{dht11, moisture, pH, npk}
+enum SensorType{dht11, moisture, pH, npk, disease}
 
 class SensorsServices {
 
@@ -23,6 +24,7 @@ class SensorsServices {
   static const int ID_MOISTURE = 2;
   static const int ID_PH = 3;
   static const int ID_NPK = 4;
+  static const int ID_DISEASE = 5;
   final preferenceService = PreferencesService();
 
   StatusTemp FilterTemperatureAndTriggerNotif(int temperature, int humidity){
@@ -124,6 +126,11 @@ class SensorsServices {
     from = DateTime(from.year, from.month, from.day);
     to = DateTime(to.year, to.month, to.day);
     return (to.difference(from).inDays / 7).round();
+  }
+
+  // disease exist => return true
+  bool diseaseFilter(String state){
+    return state != 'Healthy';
   }
 
   ///////////////////////////////////////
@@ -284,5 +291,26 @@ class SensorsServices {
     }
 
     return PlantGrowthStage.Stage1;
+  }
+
+  Future diseaseDataCallbackDispatcher() async{
+    var values = (await DeviceRepo().getDiseaseDataLast15min().once()).value;
+    if(values != null) {
+      values.forEach((key, value) {
+        DiseaseModel data = DiseaseModel.fromJson(value);
+        diseaseDataObserver(data);
+      });
+    }
+  }
+
+  void diseaseDataObserver(DiseaseModel data){
+    bool status = diseaseFilter(data.state);
+    if(status){
+      SensorType type = SensorType.disease;
+      String title = "Disease Detected : "+data.state;
+      String body = "Click on the notification tio see more details";
+      NotificationService().showNotification(ID_DISEASE, title, body);
+      NotificationService().saveNotification(type, data.state, null, title, body, false, data.date);
+    }
   }
 }

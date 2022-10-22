@@ -17,7 +17,12 @@ import 'package:workmanager/workmanager.dart';
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async{
     await NotificationService().initNotification();
-    await SensorsServices().dht11DataCallbackDispatcher();
+    SensorsServices sensorsService = SensorsServices();
+    await sensorsService.dht11DataCallbackDispatcher();
+    await sensorsService.moistureDataCallbackDispatcher();
+    await sensorsService.phDataCallbackDispatcher();
+    await sensorsService.npkDataCallbackDispatcher();
+    await sensorsService.diseaseDataCallbackDispatcher();
     return Future.value(true);
   });
 }
@@ -35,7 +40,6 @@ void main() async{
   Workmanager().registerPeriodicTask(
     "checkSensorData", "checkSensorData",
     frequency: Duration(minutes: 15),
-    initialDelay: Duration(seconds: 1),
     constraints: Constraints(
         networkType: NetworkType.connected,
         requiresBatteryNotLow: false,

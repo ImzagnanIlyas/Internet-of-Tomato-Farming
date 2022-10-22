@@ -124,7 +124,7 @@ class NotificationService {
   }
 
   Future<void> saveNotification(type, status, value, title, body, seen, time) async{
-    List<NotificationModel> notifications = await getNotifications();
+    List<NotificationModel> notifications = getNotifications();
     List<NotificationModel> tmp = List.from(notifications);
     tmp.retainWhere((element) => element.type==type);
     tmp.sort((a, b) => b.time.compareTo(a.time));
@@ -136,6 +136,7 @@ class NotificationService {
         || (type == SensorType.npk && (tmp.first.value['nitrogenValue'] != value['nitrogenValue']
             || tmp.first.value['phosphorusValue'] != value['phosphorusValue']
             || tmp.first.value['potassiumValue'] != value['potassiumValue']))
+        || (type == SensorType.disease && !tmp.first.time.isAtSameMomentAs(time))
     ){
       int id = getLastId();
       NotificationModel notification = NotificationModel(id++, type, status, value, title, body, seen, time);

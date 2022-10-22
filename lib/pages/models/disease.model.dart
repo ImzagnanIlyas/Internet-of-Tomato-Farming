@@ -13,6 +13,19 @@ class DiseaseModel {
     return DiseaseModel(state, image, dateInt);
   }
 
+  DateTime get date {
+    final dateString = dateInt.toString();
+    final year = int.parse(dateString.substring(0,4));
+    final month = int.parse(dateString.substring(4,6));
+    final day = int.parse(dateString.substring(6,8));
+    final hour = int.parse(dateString.substring(8,10));
+    final minute = int.parse(dateString.substring(10,12));
+    final second = int.parse(dateString.substring(12,14));
+    DateTime date = DateTime(year,month,day,hour,minute,second);
+
+    return date;
+  }
+
   @override
   String toString() {
     return 'DiseaseModel{state: $state, image: $image, dateInt: $dateInt}';
