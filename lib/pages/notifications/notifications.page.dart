@@ -62,14 +62,43 @@ class _NotificationsPageState extends State<NotificationsPage> {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
             if(snapshot.hasData){
               prefs = snapshot.data;
-              return Scrollbar(
-                isAlwaysShown: true,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ListView(children: _buildNotifsWidgets()),
-                )
-              );
-            }else{
+              List<NotificationModel> notifications = getNotifications();
+              List<Widget> items = _buildNotifsWidgets();
+              if(notifications.isNotEmpty){
+                  return Scrollbar(
+                      isAlwaysShown: true,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        // child: ListView(children: _buildNotifsWidgets()),
+                        child: ListView.builder(
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            return Dismissible(
+                                // Each Dismissible must contain a Key. Keys allow Flutter to
+                                // uniquely identify widgets.
+                                key: Key(notifications[index].id.toString()),
+                                // Provide a function that tells the app
+                                // what to do after an item has been swiped away.
+                                onDismissed: (direction) {
+                                  // Remove the item from the data source.
+                                  notifications.removeAt(index);
+                                  updateNotifications(notifications);
+                                  setState(() {});
+                                },
+                                child: Column(
+                                  children: [
+                                    items[index],
+                                    Divider()
+                                  ],
+                                )
+                            );
+                          },
+                        ),
+                      ));
+                }else{
+                return Center(child: Text('Empty'));
+              }
+              }else{
               return const Center();
             }
           }
@@ -151,7 +180,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               )
           )
       );
-      widgets.add(Divider());
+      // widgets.add(Divider());
     }
 
     if(widgets.isEmpty){
@@ -235,7 +264,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   void updateNotifications(List<NotificationModel> notifications) async{
-    await prefs.setString('notifications',jsonEncode(notifications));
+    prefs.setString('notifications',jsonEncode(notifications));
   }
 
   void markAsSeen(int id){
