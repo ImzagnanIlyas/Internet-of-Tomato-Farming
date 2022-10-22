@@ -7,11 +7,13 @@ import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class PhNotifDisplay extends StatefulWidget {
-  double valuePh;
+  double valuePh = 0;
   StatusPh phStatus;
 
 
-  PhNotifDisplay(this.valuePh, this.phStatus);
+  PhNotifDisplay(valuePh, this.phStatus){
+    this.valuePh = (valuePh.runtimeType == int) ? (valuePh as int).toDouble() : valuePh;
+  }
 
   @override
   State<PhNotifDisplay> createState() => _PhNotifDisplayState(valuePh, phStatus);

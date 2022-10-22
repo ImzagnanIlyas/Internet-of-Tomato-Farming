@@ -1,6 +1,7 @@
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/moisture.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
+import 'package:internet_of_tomato_farming/pages/models/ph.model.dart';
 import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:internet_of_tomato_farming/shared/preferencesService.dart';
 
@@ -19,6 +20,7 @@ class SensorsServices {
 
   static const int ID_TEMP = 1;
   static const int ID_MOISTURE = 2;
+  static const int ID_PH = 3;
   final preferenceService = PreferencesService();
 
   StatusTemp FilterTemperatureAndTriggerNotif(int temperature, int humidity){
@@ -177,6 +179,31 @@ class SensorsServices {
         body = "The soil is dry, click on the notification tio see more details";
       }
       NotificationService().showNotification(ID_MOISTURE, title, body);
+      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
+    }
+  }
+
+  Future phDataCallbackDispatcher() async{
+    var values = (await DeviceRepo().getPhDataLast15min().once()).value;
+    if(values != null) {
+      values.forEach((key, value) {
+        PhModel data = PhModel.fromJson(value);
+        phDataObserver(data.value);
+      });
+    }
+  }
+
+  void phDataObserver(int value){
+    StatusPh status = phFilter(value);
+    if(status==StatusPh.Acidic || status==StatusPh.Alkaline){
+      SensorType type = SensorType.pH;
+      String title = "Low pH : "+value.toString();
+      String body = "The soil is acidic, click on the notification tio see more details";
+      if(status==StatusPh.Alkaline) {
+        title = "High pH : "+value.toString();
+        body = "The soil is alkaline, click on the notification tio see more details";
+      }
+      NotificationService().showNotification(ID_PH, title, body);
       NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
     }
   }

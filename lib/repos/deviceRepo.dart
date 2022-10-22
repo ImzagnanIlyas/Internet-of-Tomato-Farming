@@ -54,7 +54,17 @@ class DeviceRepo {
     //TODO to be removed
     uid = '1999';
     final Query dht11History = FirebaseDatabase.instance.reference().
-    child('devices').child(uid!).child("Ph").orderByChild('Date');
+    child('devices').child(uid!).child("Ph").orderByChild('Date').limitToLast(1);
+    return dht11History;
+  }
+
+  Query getPhDataLast15min() {
+    //TODO to be removed
+    uid = '1999';
+    DateTime before15min = DateTime.now().subtract(const Duration(minutes: 15));
+    final Query dht11History = FirebaseDatabase.instance.reference()
+        .child('devices').child(uid!).child("Ph").orderByChild('Date')
+        .startAt(before15min.toDateInt());
     return dht11History;
   }
 
