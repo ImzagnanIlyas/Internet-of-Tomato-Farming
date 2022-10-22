@@ -22,7 +22,12 @@ class NotificationModel {
         ? StatusPh.values[json['status'] as int]
         : (type == SensorType.moisture)
           ? MoistureStatus.values[json['status'] as int]
-          : json['status'];
+          : {
+              'nitrogenCondition': ConditionNpk.values[json['status']['nitrogenCondition']],
+              'phosphorusCondition': ConditionNpk.values[json['status']['phosphorusCondition']],
+              'potassiumCondition': ConditionNpk.values[json['status']['potassiumCondition']],
+              'plantGrowthStage': PlantGrowthStage.values[json['status']['plantGrowthStage']]
+            };
     final value = json['value'];
     final title = json['title'] as String;
     final body = json['body'] as String;
@@ -53,6 +58,15 @@ class NotificationModel {
 
   @override
   String toString() {
-    return 'NotificationModel{id: $id, type: $type, status: $status, title: $title, body: $body, seen: $seen, time: $time}';
+    return 'NotificationModel{\n'
+        'id: $id,\n'
+        'type: $type,\n'
+        'status: $status,\n'
+        'value: $value,\n'
+        'title: $title,\n'
+        'body: $body,\n'
+        'seen: $seen,\n'
+        'time: $time\n'
+        '}';
   }
 }

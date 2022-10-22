@@ -35,9 +35,7 @@ class SensorsServices {
         body
       );
       NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
-      return ;
-    }
-    if(temperature > 35) {
+    }else if(temperature > 35) {
       StatusTemp status = StatusTemp.High;
       String title = "High Temperature : $temperature";
       String body = "The temperature of your plant is high, click on the notification tio see more details";
@@ -57,18 +55,6 @@ class SensorsServices {
     if(phValue > 8)  return StatusPh.Alkaline;
     else return StatusPh.Good;
   }
-
-  /// used in background process
-  Future dht11DataCallbackDispatcher() async{
-    var values = (await DeviceRepo().getDht11DataLast15min().once()).value;
-    if(values != null) {
-      values.forEach((key, value) {
-        Dht11Model data = Dht11Model.fromJson(value);
-        FilterTemperatureAndTriggerNotif(data.temperature, data.humidity);
-      });
-    }
-  }
-
 
   List<dynamic> npkFilter(double N, double P, double K, plantingDateString, massOfSoil) {
 
@@ -152,5 +138,20 @@ class SensorsServices {
     to = DateTime(to.year, to.month, to.day);
     return (to.difference(from).inDays / 7).round();
   }
+
+  ///////////////////////////////////////
+
+  /// used in background process
+  Future dht11DataCallbackDispatcher() async{
+    var values = (await DeviceRepo().getDht11DataLast15min().once()).value;
+    if(values != null) {
+      values.forEach((key, value) {
+        Dht11Model data = Dht11Model.fromJson(value);
+        FilterTemperatureAndTriggerNotif(data.temperature, data.humidity);
+      });
+    }
+  }
+
+
 
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/utils.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/moistureNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/npkDisplay.page.dart';
@@ -199,21 +200,22 @@ class _NotificationsPageState extends State<NotificationsPage> {
     print("CLEARED");
   }
 
-  // List<NotificationModel> getNotifications(){
-  //   List<NotificationModel> notifications = [];
-  //   String json = prefs.getString('notifications') ?? '[]';
-  //   List<dynamic> jsonList = jsonDecode(json);
-  //   for(dynamic e in jsonList){
-  //     notifications.add(NotificationModel.fromJson(e));
-  //   }
-  //   notifications.sort((a, b) => b.time.compareTo(a.time));
-  //
-  //   return notifications;
-  // }
-  //
-  // void updateNotifications(List<NotificationModel> notifications) async{
-  //   await prefs.setString('notifications',jsonEncode(notifications));
-  // }
+  List<NotificationModel> getNotifications(){
+    List<NotificationModel> notifications = [];
+    updateNotifications(getFakeNotifications());
+    String json = prefs.getString('notifications') ?? '[]';
+    List<dynamic> jsonList = jsonDecode(json);
+    for(dynamic e in jsonList){
+      notifications.add(NotificationModel.fromJson(e));
+    }
+    notifications.sort((a, b) => b.time.compareTo(a.time));
+
+    return notifications;
+  }
+
+  void updateNotifications(List<NotificationModel> notifications) async{
+    await prefs.setString('notifications',jsonEncode(notifications));
+  }
 
   void markAsSeen(int id){
     List<NotificationModel> notifications = NotificationService().getNotifications();
@@ -224,7 +226,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
     NotificationService().updateNotifications(notifications);
   }
 
-  List<NotificationModel> getNotifications(){
+  List<NotificationModel> getFakeNotifications(){
     int id = 0;
     Map<String, dynamic> dht1Value = {
       'temperature': 11,
@@ -236,10 +238,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
       'potassiumValue': 28.3
     };
     Map<String, dynamic> npkStatus = {
-      'nitrogenCondition': ConditionNpk.Low,
-      'phosphorusCondition': ConditionNpk.Good,
-      'potassiumCondition': ConditionNpk.Low,
-      'plantGrowthStage': PlantGrowthStage.Stage1
+      'nitrogenCondition': ConditionNpk.Low.index,
+      'phosphorusCondition': ConditionNpk.Good.index,
+      'potassiumCondition': ConditionNpk.Low.index,
+      'plantGrowthStage': PlantGrowthStage.Stage1.index
     };
     List<NotificationModel> notifications = [
       NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,

@@ -44,7 +44,7 @@ class _SensorTabState extends State<SensorTab> {
     _everySecond = Timer.periodic(Duration(seconds: 2000), (Timer t) {
       setState(() {
         _now = DateTime.now().second.toString();
-        print(_now);
+        //print(_now);
       });
     });
   }
@@ -73,11 +73,11 @@ class _SensorTabState extends State<SensorTab> {
                         values.forEach((key, values) {
                           Dht11Model data = Dht11Model.fromJson(values);
                           dht11Data.add(data);
-                          // print(data);
+                          // //print(data);
                         });
                       }
-                      print(dht11Data);
-                      print(dht11Data.last);
+                      //print(dht11Data);
+                      //print(dht11Data.last);
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -148,13 +148,13 @@ class _SensorTabState extends State<SensorTab> {
                                 MoistureModel data =
                                     MoistureModel.fromJson(values);
                                 moistureData.add(data);
-                                // print(data);
+                                // //print(data);
                               });
                               // SensorsServices.FilterTemperatureAndTriggerNotif(
                               //     moistureData.last.value.toDouble());
                             }
-                            print(moistureData);
-                            print(moistureData.last);
+                            //print(moistureData);
+                            //print(moistureData.last);
                             return Column(
                               children: [
                                 Text('Moisture',
@@ -207,13 +207,13 @@ class _SensorTabState extends State<SensorTab> {
                               values.forEach((key, values) {
                                 PhModel data = PhModel.fromJson(values);
                                 phData.add(data);
-                                // print(data);
+                                // //print(data);
                               });
                               // SensorsServices.FilterTemperatureAndTriggerNotif(
                               //     moistureData.last.value.toDouble());
                             }
-                            print(phData);
-                            print(phData.last);
+                            //print(phData);
+                            //print(phData.last);
                             return Column(
                               children: [
                                 Text('Ph',
@@ -255,13 +255,13 @@ class _SensorTabState extends State<SensorTab> {
                         values.forEach((key, values) {
                           NPKModel data = NPKModel.fromJson(values);
                           npkData.add(data);
-                          print(data);
+                          //print(data);
                         });
                         // SensorsServices.FilterTemperatureAndTriggerNotif(
                         //     moistureData.last.value.toDouble());
                       }
-                      print(npkData);
-                      print(npkData.last);
+                      //print(npkData);
+                      //print(npkData.last);
                       return Padding(
                         padding: const EdgeInsets.only(right: 8, left: 8, top: 4),
                         child: Row(
