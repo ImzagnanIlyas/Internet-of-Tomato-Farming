@@ -19,29 +19,10 @@ class SensorsServices {
   static const int ID_TEMP = 1;
   final preferenceService = PreferencesService();
 
-  void FilterTemperatureAndTriggerNotif(int temperature, int humidity){
-    SensorType type = SensorType.dht11;
-    Map<String, dynamic> value = {
-      'temperature': temperature,
-      'humidity': humidity
-    };
-    if(temperature < 12) {
-      StatusTemp status = StatusTemp.Low;
-      String title = "Low Temperature : $temperature";
-      String body = "The temperature of your plant is low, click on the notification tio see more details";
-      NotificationService().showNotification(
-        ID_TEMP,
-        title,
-        body
-      );
-      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
-    }else if(temperature > 35) {
-      StatusTemp status = StatusTemp.High;
-      String title = "High Temperature : $temperature";
-      String body = "The temperature of your plant is high, click on the notification tio see more details";
-      NotificationService().showNotification(ID_TEMP,title, body);
-      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
-    }
+  StatusTemp FilterTemperatureAndTriggerNotif(int temperature, int humidity){
+    if(temperature < 12)  return StatusTemp.Low;
+    if(temperature > 35)  return StatusTemp.High;
+    return StatusTemp.Good;
   }
 
   static MoistureStatus moistureFilter(int moistureValue){
@@ -147,11 +128,29 @@ class SensorsServices {
     if(values != null) {
       values.forEach((key, value) {
         Dht11Model data = Dht11Model.fromJson(value);
-        FilterTemperatureAndTriggerNotif(data.temperature, data.humidity);
+        dh11DataObserver(data.temperature, data.humidity);
       });
     }
   }
 
-
-
+  /// used in dh11Repo & dht11DataCallbackDispatcher
+  void dh11DataObserver(int temperature, int humidity){
+    StatusTemp status = FilterTemperatureAndTriggerNotif(temperature, humidity);
+    if(status==StatusTemp.Low || status==StatusTemp.High){
+      SensorType type = SensorType.dht11;
+      Map<String, dynamic> value = {
+        'temperature': temperature,
+        'humidity': humidity
+      };
+      String title = "Low Temperature : "+temperature.toString();
+      String body = "The temperature of your plant is low, click on the notification tio see more details";
+      if(status==StatusTemp.High) {
+        title = "High Temperature : "+temperature.toString();
+        body = "The temperature of your plant is high, click on the notification tio see more details";
+      }
+      NotificationService notificationService = NotificationService();
+      notificationService.showNotification(ID_TEMP, title, body);
+      notificationService.saveNotification(type, status, value, title, body, false, DateTime.now());
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:internet_of_tomato_farming/pages/home.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/moistureNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/npkDisplay.page.dart';
@@ -23,7 +24,7 @@ void callbackDispatcher() {
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  NotificationService().initNotification();
+  bool didNotificationLaunchApp = await NotificationService().initNotification();
   bool isLogged = await DeviceRepo.initializeFirebase();
 
   Workmanager().cancelAll();
@@ -34,6 +35,7 @@ void main() async{
   Workmanager().registerPeriodicTask(
     "checkSensorData", "checkSensorData",
     frequency: Duration(minutes: 15),
+    initialDelay: Duration(seconds: 1),
     constraints: Constraints(
         networkType: NetworkType.connected,
         requiresBatteryNotLow: false,
@@ -43,24 +45,28 @@ void main() async{
     )
   );
 
-  runApp(MyApp(isLogged: isLogged));
+  runApp(MyApp(isLogged: isLogged, didNotificationLaunchApp: didNotificationLaunchApp));
 }
 
 class MyApp extends StatelessWidget {
 
-  MyApp({Key? key, required this.isLogged}) : super(key: key);
   bool isLogged = false;
+  static final homePageKey = GlobalKey<HomePageState>();
+  late final Map<String, Widget Function(BuildContext)> routes;
+  bool didNotificationLaunchApp;
 
-  static final Map<String, Widget Function(BuildContext)> routes = {
-    '/qr': (context) => QRViewPage(),
-    '/home': (context) => HomePage(),
-    '/tempAndHumNotifDisplay': (context) => TempAndHumNotifDisplay(StatusTemp.Low, 39, 16),
-    '/phNotifDisplay': (context) => PhNotifDisplay(11.1, StatusPh.Acidic),
-    '/npkNotifDisplay': (context) => NpkNotifDisplay(ConditionNpk.Low, ConditionNpk.Good, ConditionNpk.Low, 20, 30, 28, PlantGrowthStage.Stage1),
-    '/npkForm': (context) => NpkForm(),
-    '/moistureNotifDisplay': (context) => MoistureNotifDisplay(MoistureStatus.Dry, 30),
-    '/notifications': (context) => NotificationsPage(),
-  };
+  MyApp({Key? key, required this.isLogged, this.didNotificationLaunchApp = false}) :super(key: key){
+    routes = {
+      '/qr': (context) => QRViewPage(),
+      '/home': (context) => HomePage(key: homePageKey,didNotificationLaunchApp: didNotificationLaunchApp),
+      '/tempAndHumNotifDisplay': (context) => TempAndHumNotifDisplay(StatusTemp.Low, 39, 16),
+      '/phNotifDisplay': (context) => PhNotifDisplay(11.1, StatusPh.Acidic),
+      '/npkNotifDisplay': (context) => NpkNotifDisplay(ConditionNpk.Low, ConditionNpk.Good, ConditionNpk.Low, 20, 30, 28, PlantGrowthStage.Stage1),
+      '/npkForm': (context) => NpkForm(),
+      '/moistureNotifDisplay': (context) => MoistureNotifDisplay(MoistureStatus.Dry, 30),
+      '/notifications': (context) => NotificationsPage(),
+    };
+  }
 
   @override
   Widget build(BuildContext context) {

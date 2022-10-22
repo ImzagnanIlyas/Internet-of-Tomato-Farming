@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_beautiful_popup/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
@@ -9,11 +10,14 @@ import 'package:internet_of_tomato_farming/pages/tabs/sensors.page.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 
 class HomePage extends StatefulWidget {
+  bool didNotificationLaunchApp;
+  HomePage({Key? key, this.didNotificationLaunchApp=false}): super(key: key);
+
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   var _currentSelection = 1;
   late Timer timer;
 
@@ -21,9 +25,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
+    SchedulerBinding.instance?.addPostFrameCallback((_){
+      if(widget.didNotificationLaunchApp) onNotificationLaunchApp();
+    });
   }
 
 
@@ -107,5 +112,9 @@ class _HomePageState extends State<HomePage> {
         if (_currentSelection == 1) PlantStatusTab(),
       ]),
     );
+  }
+
+  void onNotificationLaunchApp(){
+    Navigator.pushNamed(context, '/notifications');
   }
 }

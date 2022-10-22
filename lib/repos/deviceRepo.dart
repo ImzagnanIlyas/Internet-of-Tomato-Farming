@@ -36,7 +36,7 @@ class DeviceRepo {
     //TODO to be removed
     uid = '1999';
     final Query dht11History = FirebaseDatabase.instance.reference().
-    child('devices').child(uid!).child("DHT11").orderByChild('dateInt');
+    child('devices').child(uid!).child("DHT11").orderByChild('Date').limitToLast(1);
     return dht11History;
   }
 

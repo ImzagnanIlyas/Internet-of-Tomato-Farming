@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:internet_of_tomato_farming/main.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
+import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -23,7 +25,7 @@ class NotificationService {
 
   NotificationService._internal();
 
-  Future<void> initNotification() async {
+  Future<bool> initNotification() async {
      tz.initializeTimeZones();
      //tz.setLocalLocation(tz.getLocation(locationName));
     // Android initialization
@@ -43,8 +45,19 @@ class NotificationService {
         android: initializationSettingsAndroid,
         iOS: initializationSettingsIOS);
     // the initialization settings are initialized after they are setted
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(
+        initializationSettings,
+        onSelectNotification: (payload) async{
+          MyApp.homePageKey.currentState?.onNotificationLaunchApp();
+        }
+    );
     prefs = await SharedPreferences.getInstance();
+    final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+    await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    final didNotificationLaunchApp =
+       notificationAppLaunchDetails?.didNotificationLaunchApp ?? false;
+
+    return didNotificationLaunchApp;
   }
 
   Future<void> showNotification(int id, String title, String body) async {
@@ -111,14 +124,32 @@ class NotificationService {
   }
 
   Future<void> saveNotification(type, status, value, title, body, seen, time) async{
+    List<NotificationModel> notifications = await getNotifications();
+    List<NotificationModel> tmp = List.from(notifications);
+    tmp.retainWhere((element) => element.type==type);
+    tmp.sort((a, b) => b.time.compareTo(a.time));
+
+    if(tmp.isEmpty
+        || (type == SensorType.dht11 && tmp.first.value['temperature'] != value['temperature'])
+    ){
+      int id = getLastId();
+      NotificationModel notification = NotificationModel(id++, type, status, value, title, body, seen, time);
+      notifications.add(notification);
+      updateNotifications(notifications);
+      updateId(id);
+    }
+  }
+
+  int getLastId(){
     int id = prefs.getInt('notificationID');
     if(id == null){
       prefs.setInt('notificationID', 0);
-      id = 0;
+      return 0;
     }
-    NotificationModel notification = NotificationModel(id, type, status, value, title, body, seen, time);
-    List<NotificationModel> notifications = await getNotifications();
-    notifications.add(notification);
-    updateNotifications(notifications);
+    return id;
+  }
+
+  void updateId(int id){
+    prefs.setInt('notificationID', id);
   }
 }

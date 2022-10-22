@@ -37,22 +37,22 @@ class _NotificationsPageState extends State<NotificationsPage> {
         //   IconButton(onPressed: saveDummyData, icon: Icon(Icons.save_alt)),
         // ],
       ),
-      body: Scrollbar(
-        isAlwaysShown: true,
-        child: Padding(
-         padding: const EdgeInsets.all(10.0),
-         child: FutureBuilder(
-           future: initPrefs(),
-           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
-             if(snapshot.hasData){
-               prefs = snapshot.data;
-               return ListView(children: _buildNotifsWidgets());
-             }else{
-               return const Center();
-             }
-           }
-         ),
-        ),
+      body: FutureBuilder(
+        future: initPrefs(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
+          if(snapshot.hasData){
+            prefs = snapshot.data;
+            return Scrollbar(
+              isAlwaysShown: true,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ListView(children: _buildNotifsWidgets()),
+              )
+            );
+          }else{
+            return const Center();
+          }
+        }
       ),
     );
   }
@@ -202,7 +202,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   List<NotificationModel> getNotifications(){
     List<NotificationModel> notifications = [];
-    updateNotifications(getFakeNotifications());
     String json = prefs.getString('notifications') ?? '[]';
     List<dynamic> jsonList = jsonDecode(json);
     for(dynamic e in jsonList){
