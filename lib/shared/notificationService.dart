@@ -158,4 +158,13 @@ class NotificationService {
   void updateId(int id){
     prefs.setInt('notificationID', id);
   }
+
+  int getUnreadNotificationNumber(){
+    List<NotificationModel> notifications = getNotifications();
+    int unreadNotifications = 0;
+    for(NotificationModel e in notifications){
+      if(!e.seen) unreadNotifications++;
+    }
+    return unreadNotifications;
+  }
 }
