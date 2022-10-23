@@ -1,17 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class PhGadget extends StatefulWidget {
-  double valuePh;
+// class PhGadget extends StatefulWidget {
+//   double valuePh;
+//   PhGadget(this.valuePh);
+//
+//   @override
+//   State<PhGadget> createState() => _PhState(valuePh);
+// }
+class PhGadget extends StatelessWidget {
+  final ValueListenable<double> valuePh;
+
   PhGadget(this.valuePh);
-
-  @override
-  State<PhGadget> createState() => _PhState(valuePh);
-}
-class _PhState extends State<PhGadget> {
-  double valuePh = 0;
-
-  _PhState(this.valuePh);
 
   double width = 0.4;
 
@@ -168,7 +169,7 @@ class _PhState extends State<PhGadget> {
             ],
             pointers: <GaugePointer>[
               NeedlePointer(
-                value: valuePh,
+                value: valuePh.value,
                 lengthUnit: GaugeSizeUnit.factor,
                 needleLength: 0.7,
                 needleStartWidth: 0.5, needleEndWidth: 4,

@@ -27,25 +27,25 @@ class SensorsServices {
   static const int ID_DISEASE = 5;
   final preferenceService = PreferencesService();
 
-  StatusTemp FilterTemperatureAndTriggerNotif(int temperature, int humidity){
+  StatusTemp FilterTemperatureAndTriggerNotif(double temperature, double humidity){
     if(temperature < 12)  return StatusTemp.Low;
     if(temperature > 35)  return StatusTemp.High;
     return StatusTemp.Good;
   }
 
-  static MoistureStatus moistureFilter(int moistureValue){
+  static MoistureStatus moistureFilter(double moistureValue){
     if(moistureValue < 60 )  return MoistureStatus.Dry;
     if(moistureValue > 80 )  return MoistureStatus.Moisturized;
     return MoistureStatus.Good;
   }
 
-  static StatusPh phFilter(int phValue){
+  static StatusPh phFilter(double phValue){
     if(phValue < 6)  return StatusPh.Acidic;
     if(phValue > 8)  return StatusPh.Alkaline;
     else return StatusPh.Good;
   }
 
-  List<dynamic> npkFilter(int N, int P, int K, plantingDateString, massOfSoil) {
+  List<dynamic> npkFilter(double N, double P, double K, plantingDateString, massOfSoil) {
 
     DateTime plantingDate = DateFormat('dd-MM-yyyy').parse(plantingDateString);
     int weekOfPlanting = weeksBetween(plantingDate, DateTime.now());
@@ -147,7 +147,7 @@ class SensorsServices {
   }
 
   /// used in dh11Repo & dht11DataCallbackDispatcher
-  void dh11DataObserver(int temperature, int humidity){
+  void dh11DataObserver(double temperature, double humidity){
     StatusTemp status = FilterTemperatureAndTriggerNotif(temperature, humidity);
     if(status==StatusTemp.Low || status==StatusTemp.High){
       SensorType type = SensorType.dht11;
@@ -177,7 +177,7 @@ class SensorsServices {
     }
   }
 
-  void moistureDataObserver(int value){
+  void moistureDataObserver(double value){
     MoistureStatus status = moistureFilter(value);
     if(status==MoistureStatus.Dry || status==MoistureStatus.Moisturized){
       SensorType type = SensorType.moisture;
@@ -202,7 +202,7 @@ class SensorsServices {
     }
   }
 
-  void phDataObserver(int value){
+  void phDataObserver(double value){
     StatusPh status = phFilter(value);
     if(status==StatusPh.Acidic || status==StatusPh.Alkaline){
       SensorType type = SensorType.pH;

@@ -1,6 +1,6 @@
 class Dht11Model {
-  int humidity;
-  int temperature;
+  double humidity;
+  double temperature;
   int dateInt;
 
   DateTime get date {
@@ -20,10 +20,11 @@ class Dht11Model {
   Dht11Model(this.humidity, this.temperature, this.dateInt);
 
   factory Dht11Model.fromJson(Map<dynamic, dynamic> json) {
-    final humidity = json['Humidity'] as int;
-    final temperature = json['Temperature'] as int;
+    final humidity = json['Humidity'] as double;
+    final temperature = json['Temperature'] as double;
     final dateInt = json['Date'] as int;
-    return Dht11Model(humidity, temperature, dateInt);
+
+    return Dht11Model(humidity.toDouble(), temperature.toDouble(), dateInt);
   }
 
   @override
