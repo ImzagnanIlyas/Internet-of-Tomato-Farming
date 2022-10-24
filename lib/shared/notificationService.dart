@@ -122,6 +122,7 @@ class NotificationService {
 
   void updateNotifications(List<NotificationModel> notifications) async{
     await prefs.setString('notifications',jsonEncode(notifications));
+    MyApp.homePageKey.currentState!.setState(()=>null);
   }
 
   Future<void> saveNotification(id,type, status, value, title, body, seen, time) async{

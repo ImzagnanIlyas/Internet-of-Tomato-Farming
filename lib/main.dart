@@ -81,9 +81,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.lightGreen
       ),
       routes: routes,
-      initialRoute: '/qr',
-        //initialRoute: '/phNotifDisplay'
-      // initialRoute: (isLogged) ? '/home': '/qr',
+      initialRoute: (isLogged) ? '/home': '/qr',
     );
   }
 
