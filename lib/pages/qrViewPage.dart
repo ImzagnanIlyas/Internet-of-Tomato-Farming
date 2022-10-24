@@ -67,7 +67,7 @@ class _QRViewPageState extends State<QRViewPage> {
       if(scanData.code != null){
         await controller.pauseCamera();
         DeviceRepo.initDevice(scanData.code ?? "err").then((value){
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/npkForm');
         }).onError((error, stackTrace) async{
           await controller.resumeCamera();
           ScaffoldMessenger.of(context).showSnackBar(
