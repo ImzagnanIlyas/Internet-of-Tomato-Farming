@@ -1,14 +1,14 @@
 class PhModel {
-  int value;
+  double value;
   int Date;
 
 
   PhModel(this.value, this.Date);
 
   factory PhModel.fromJson(Map<dynamic, dynamic> json) {
-    final value = json['value'] as int;
+    final value = json['value'] as double;
     final Date = json['Date'] as int;
-    return PhModel(value, Date);
+    return PhModel(value.toDouble(), Date);
   }
 
   @override

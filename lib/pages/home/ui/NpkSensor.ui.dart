@@ -1,27 +1,30 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
-class NpkSensor extends StatefulWidget {
-  var n_value;
-  var p_value;
-  var k_value;
+// class NpkSensor extends StatefulWidget {
+//   var n_value;
+//   var p_value;
+//   var k_value;
+//
+//   NpkSensor(this.n_value, this.p_value, this.k_value);
+//
+//   @override
+//   State<NpkSensor> createState() => _NpkSensorState(n_value, p_value, k_value);
+// }
 
-  NpkSensor(this.n_value, this.p_value, this.k_value);
+class NpkSensor extends StatelessWidget {
+  final ValueListenable<List<double>> npkValues;
 
-  @override
-  State<NpkSensor> createState() => _NpkSensorState(n_value, p_value, k_value);
-}
-
-class _NpkSensorState extends State<NpkSensor> {
-
-  var n_value;
-  var p_value;
-  var k_value;
+  // final ValueListenable<double> n_value;
+  // final ValueListenable<double> p_value;
+  // final ValueListenable<double> k_value;
 
 
-  _NpkSensorState(this.n_value, this.p_value, this.k_value);
+
+  NpkSensor(this.npkValues);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,7 @@ class _NpkSensorState extends State<NpkSensor> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(n_value+ ' mg/Kg',
+                  Text(npkValues.value[0].toString()+ ' mg/Kg',
                       style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,)),
@@ -96,7 +99,7 @@ class _NpkSensorState extends State<NpkSensor> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(p_value+ ' mg/Kg',
+                  Text(npkValues.value[1].toString()+ ' mg/Kg',
                       style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,)),
@@ -133,7 +136,7 @@ class _NpkSensorState extends State<NpkSensor> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(k_value+ ' mg/Kg',
+                  Text(npkValues.value[2].toString()+ ' mg/Kg',
                       style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,)),

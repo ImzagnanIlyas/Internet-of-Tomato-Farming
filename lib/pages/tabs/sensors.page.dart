@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home/ui/NpkSensor.ui.dart';
+import 'package:internet_of_tomato_farming/pages/home/ui/temperature.ui.dart';
 import 'package:internet_of_tomato_farming/pages/models/npk.model.dart';
 import 'package:internet_of_tomato_farming/pages/models/ph.model.dart';
 import 'package:internet_of_tomato_farming/shared/notificationService.dart';
@@ -13,7 +14,6 @@ import '../../services/sensors.services.dart';
 import '../../shared/toasts.dart';
 import '../home/ui/humidity.ui.dart';
 import '../home/ui/ph.ui.dart';
-import '../home/ui/temperature.ui.dart';
 import '../models/dht11.model.dart';
 import '../models/moisture.model.dart';
 
@@ -25,11 +25,20 @@ class SensorTab extends StatefulWidget {
 class _SensorTabState extends State<SensorTab> {
   final _deviceRepo = DeviceRepo();
   final _toast = ToastMsg();
+  final tempValue = new ValueNotifier<double>(0);
+  final humidityValue = new ValueNotifier<double>(0);
+  final phValue = new ValueNotifier<double>(0);
+  final npkValues = new ValueNotifier<List<double>>([0, 0, 0]);
+  final nValue = new ValueNotifier<double>(0);
+  final pValue = new ValueNotifier<double>(0);
+  final kValue = new ValueNotifier<double>(0);
+
 
   List<Dht11Model> dht11Data = [];
   List<MoistureModel> moistureData = [];
   List<PhModel> phData = [];
   List<NPKModel> npkData = [];
+
 
   late String _now;
   late Timer _everySecond;
@@ -39,13 +48,13 @@ class _SensorTabState extends State<SensorTab> {
     // TODO: implement initState
     super.initState();
     _now = DateTime.now().second.toString();
-
     // defines a timer
-    _everySecond = Timer.periodic(Duration(seconds: 2000), (Timer t) {
+    _everySecond = Timer.periodic(Duration(seconds: 10), (Timer t) {
       setState(() {
         _now = DateTime.now().second.toString();
         //print(_now);
       });
+
     });
   }
 
@@ -76,7 +85,10 @@ class _SensorTabState extends State<SensorTab> {
                           // //print(data);
                         });
                       }
-                      //print(dht11Data);
+                      tempValue.value = dht11Data.last.temperature.toDouble();
+                      humidityValue.value = dht11Data.last.humidity.toDouble();
+                      // print(tempValue.value);
+                      // print(humidityValue.value);
                       //print(dht11Data.last);
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -96,8 +108,13 @@ class _SensorTabState extends State<SensorTab> {
                                     width: 170.0,
                                     height: 180,
                                     //height: 300,
-                                    child: TemperatureGadget(double.parse(
-                                        dht11Data.last.temperature.toString())),
+                                    child: ValueListenableBuilder<double>(
+                                      valueListenable: tempValue,
+                                      builder: (context, value, child) {
+                                        return TemperatureGadget(tempValue);
+                                      },
+                                    ),
+                                    //new TemperatureGadget(tempValue.value),
                                   ),
                                 ),
                               ],
@@ -116,8 +133,12 @@ class _SensorTabState extends State<SensorTab> {
                                     width: 170.0,
                                     height: 180,
                                     //height: 300,
-                                    child: HumidityGadget(double.parse(
-                                        dht11Data.last.humidity.toString())),
+                                    child: ValueListenableBuilder<double>(
+                                      valueListenable: humidityValue,
+                                      builder: (context, value, child) {
+                                        return HumidityGadget(humidityValue);
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -178,7 +199,7 @@ class _SensorTabState extends State<SensorTab> {
                                           color: Colors.lightBlue,
                                           size: 70,
                                         ),
-                                        Text(moistureData.last.value.toString(),
+                                        Text(moistureData.last.value.toInt().toString(),
                                             style: TextStyle(
                                                 fontSize: 60,
                                                 fontWeight: FontWeight.bold)),
@@ -212,6 +233,8 @@ class _SensorTabState extends State<SensorTab> {
                               // SensorsServices.FilterTemperatureAndTriggerNotif(
                               //     moistureData.last.value.toDouble());
                             }
+                            phValue.value = phData.last.value.toDouble();
+                            //print(phValue.value);
                             //print(phData);
                             //print(phData.last);
                             return Column(
@@ -228,7 +251,13 @@ class _SensorTabState extends State<SensorTab> {
                                     width: 170.0,
                                     height: 180,
                                     //height: 300,
-                                    child: PhGadget(phData.last.value.toDouble()),
+                                    child: ValueListenableBuilder<double>(
+                                      valueListenable: phValue,
+                                      builder: (context, value, child) {
+                                        return PhGadget(phValue);
+                                      },
+                                    ),
+
                                   ),
                                 ),
                               ],
@@ -260,6 +289,15 @@ class _SensorTabState extends State<SensorTab> {
                         // SensorsServices.FilterTemperatureAndTriggerNotif(
                         //     moistureData.last.value.toDouble());
                       }
+                      npkValues.value[0] = npkData.last.n.toDouble();
+                      npkValues.value[1] = npkData.last.p.toDouble();
+                      npkValues.value[2] = npkData.last.k.toDouble();
+                      // nValue.value = npkData.last.n.toDouble();
+                      // pValue.value = npkData.last.p.toDouble();
+                      // kValue.value = npkData.last.k.toDouble();
+                      // print(nValue.value);
+                      // print(pValue.value);
+                      // print(kValue.value);
                       //print(npkData);
                       //print(npkData.last);
                       return Padding(
@@ -282,7 +320,13 @@ class _SensorTabState extends State<SensorTab> {
                                         width: 260.0,
                                         height: 180,
                                         //height: 300,
-                                        child: NpkSensor(npkData.last.n.toString(), npkData.last.p.toString(), npkData.last.k.toString())
+                                        child: ValueListenableBuilder<List<double>>(
+                                          valueListenable: npkValues,
+                                          builder: (context, value, child) {
+                                            return NpkSensor(npkValues);
+                                          },
+                                        ),
+
                                     ),
                                   ),
                                 ),

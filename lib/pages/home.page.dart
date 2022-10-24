@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  var _currentSelection = 1;
+  var _currentSelection = 0;
   late Timer timer;
 
 
