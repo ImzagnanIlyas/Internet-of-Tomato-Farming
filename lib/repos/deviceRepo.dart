@@ -18,17 +18,21 @@ class DeviceRepo {
   }
 
   static Future initDevice(String uid1) async {
-    DatabaseReference ref = database.reference().child('devices');
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setString("uid", '1999');
+    uid = uid1;
 
-    await ref.update({
-      uid1: {
-        "createdAt": DateTime.now().toString()
-      },
-    }).then((value) async {
-      var prefs = await SharedPreferences.getInstance();
-      prefs.setString("uid", uid1);
-      uid = uid1;
-    });
+    // DatabaseReference ref = database.reference().child('devices');
+
+    // await ref.update({
+    //   uid1: {
+    //     "createdAt": DateTime.now().toString()
+    //   },
+    // }).then((value) async {
+    //   var prefs = await SharedPreferences.getInstance();
+    //   prefs.setString("uid", uid1);
+    //   uid = uid1;
+    // });
   }
 
 

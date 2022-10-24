@@ -64,7 +64,7 @@ class _QRViewPageState extends State<QRViewPage> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) async{
-      if(scanData.code != null){
+      if(scanData.code != null && scanData.code == '1999'){
         await controller.pauseCamera();
         DeviceRepo.initDevice(scanData.code ?? "err").then((value){
           Navigator.pushReplacementNamed(context, '/npkForm');

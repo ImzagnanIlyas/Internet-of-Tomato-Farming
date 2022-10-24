@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:internet_of_tomato_farming/main.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
 import 'package:internet_of_tomato_farming/services/sensors.services.dart';
+import 'package:internet_of_tomato_farming/shared/extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -123,26 +124,26 @@ class NotificationService {
     await prefs.setString('notifications',jsonEncode(notifications));
   }
 
-  Future<void> saveNotification(type, status, value, title, body, seen, time) async{
+  Future<void> saveNotification(id,type, status, value, title, body, seen, time) async{
     List<NotificationModel> notifications = getNotifications();
     List<NotificationModel> tmp = List.from(notifications);
     tmp.retainWhere((element) => element.type==type);
     tmp.sort((a, b) => b.time.compareTo(a.time));
 
-    if(tmp.isEmpty
-        || (type == SensorType.dht11 && tmp.first.value['temperature'] != value['temperature'])
+    if(tmp.isEmpty || (tmp.indexOfId(id) == -1
+        && ((type == SensorType.dht11 && tmp.first.value['temperature'] != value['temperature'])
         || (type == SensorType.moisture && tmp.first.value != value)
         || (type == SensorType.pH && tmp.first.value != value)
         || (type == SensorType.npk && (tmp.first.value['nitrogenValue'] != value['nitrogenValue']
             || tmp.first.value['phosphorusValue'] != value['phosphorusValue']
             || tmp.first.value['potassiumValue'] != value['potassiumValue']))
-        || (type == SensorType.disease && !tmp.first.time.isAtSameMomentAs(time))
+        || (type == SensorType.disease && !tmp.first.time.isAtSameMomentAs(time))))
     ){
-      int id = getLastId();
-      NotificationModel notification = NotificationModel(id++, type, status, value, title, body, seen, time);
+      // int id = getLastId();
+      NotificationModel notification = NotificationModel(id, type, status, value, title, body, seen, time);
       notifications.add(notification);
       updateNotifications(notifications);
-      updateId(id);
+      // updateId(id);
     }
   }
 

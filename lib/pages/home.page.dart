@@ -31,6 +31,10 @@ class HomePageState extends State<HomePage> {
     SchedulerBinding.instance?.addPostFrameCallback((_){
       if(widget.didNotificationLaunchApp) onNotificationLaunchApp();
     });
+    // launchCallbackDispatchers();
+  }
+
+  void launchCallbackDispatchers(){
     SensorsServices sensorsService = SensorsServices();
     sensorsService.dht11DataCallbackDispatcher();
     sensorsService.moistureDataCallbackDispatcher();
@@ -122,8 +126,13 @@ class HomePageState extends State<HomePage> {
             });
           },
         ),
-        if (_currentSelection == 0) SensorTab(),
-        if (_currentSelection == 1) PlantStatusTab(),
+        GestureDetector(
+          onTap: () {
+            setState(() {});
+            launchCallbackDispatchers();
+          },
+          child: (_currentSelection == 0) ? SensorTab() : PlantStatusTab(),
+        ),
       ]),
     );
   }

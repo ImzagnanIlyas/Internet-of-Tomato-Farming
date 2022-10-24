@@ -24,7 +24,7 @@ class SensorTab extends StatefulWidget {
 
 class _SensorTabState extends State<SensorTab> {
   final _deviceRepo = DeviceRepo();
-  final _toast = ToastMsg();
+  // final _toast = ToastMsg();
   final tempValue = new ValueNotifier<double>(0);
   final humidityValue = new ValueNotifier<double>(0);
   final phValue = new ValueNotifier<double>(0);
@@ -75,8 +75,8 @@ class _SensorTabState extends State<SensorTab> {
                       if (values == null) {
                         Dht11Model data = Dht11Model(0, 0, 0);
                         dht11Data.add(data);
-                        _toast.showMsg(
-                            'No temperature and humidity data to be shown');
+                        // _toast.showMsg(
+                        //     'No temperature and humidity data to be shown');
                       } else {
                         values.forEach((key, values) {
                           Dht11Model data = Dht11Model.fromJson(values);
@@ -162,7 +162,7 @@ class _SensorTabState extends State<SensorTab> {
                             if (values == null) {
                               MoistureModel data = MoistureModel(0, 0);
                               moistureData.add(data);
-                              _toast.showMsg('No moisture data to be shown');
+                              // _toast.showMsg('No moisture data to be shown');
                             } else {
                               values.forEach((key, values) {
                                 MoistureModel data =
@@ -222,7 +222,7 @@ class _SensorTabState extends State<SensorTab> {
                             if (values == null) {
                               PhModel data = PhModel(0, 0);
                               phData.add(data);
-                              _toast.showMsg('No PH data to be shown');
+                              // _toast.showMsg('No PH data to be shown');
                             } else {
                               values.forEach((key, values) {
                                 PhModel data = PhModel.fromJson(values);
@@ -278,7 +278,7 @@ class _SensorTabState extends State<SensorTab> {
                       if (values == null) {
                         NPKModel data = NPKModel(0, 0, 0, 0);
                         npkData.add(data);
-                        _toast.showMsg('No NPK data to be shown');
+                        // _toast.showMsg('No NPK data to be shown');
                       } else {
                         values.forEach((key, values) {
                           NPKModel data = NPKModel.fromJson(values);

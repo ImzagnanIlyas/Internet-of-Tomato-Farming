@@ -137,17 +137,21 @@ class SensorsServices {
 
   /// used in background process
   Future dht11DataCallbackDispatcher() async{
+    print('dht11DataCallbackDispatcher');
     var values = (await DeviceRepo().getDht11DataLast15min().once()).value;
+    print(values);
     if(values != null) {
       values.forEach((key, value) {
         Dht11Model data = Dht11Model.fromJson(value);
-        dh11DataObserver(data.temperature, data.humidity);
+        dh11DataObserver(data);
       });
     }
   }
 
   /// used in dh11Repo & dht11DataCallbackDispatcher
-  void dh11DataObserver(double temperature, double humidity){
+  void dh11DataObserver(Dht11Model data){
+    double temperature = data.temperature;
+    double humidity = data.humidity;
     StatusTemp status = FilterTemperatureAndTriggerNotif(temperature, humidity);
     if(status==StatusTemp.Low || status==StatusTemp.High){
       SensorType type = SensorType.dht11;
@@ -163,7 +167,7 @@ class SensorsServices {
       }
       NotificationService notificationService = NotificationService();
       notificationService.showNotification(ID_TEMP, title, body);
-      notificationService.saveNotification(type, status, value, title, body, false, DateTime.now());
+      notificationService.saveNotification(data.dateInt, type, status, value, title, body, false, DateTime.now());
     }
   }
 
@@ -172,12 +176,13 @@ class SensorsServices {
     if(values != null) {
       values.forEach((key, value) {
         MoistureModel data = MoistureModel.fromJson(value);
-        moistureDataObserver(data.value);
+        moistureDataObserver(data);
       });
     }
   }
 
-  void moistureDataObserver(double value){
+  void moistureDataObserver(MoistureModel data){
+    var value = data.value;
     MoistureStatus status = moistureFilter(value);
     if(status==MoistureStatus.Dry || status==MoistureStatus.Moisturized){
       SensorType type = SensorType.moisture;
@@ -188,7 +193,7 @@ class SensorsServices {
         body = "The soil is dry, click on the notification tio see more details";
       }
       NotificationService().showNotification(ID_MOISTURE, title, body);
-      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
+      NotificationService().saveNotification(data.Date, type, status, value, title, body, false, DateTime.now());
     }
   }
 
@@ -197,12 +202,13 @@ class SensorsServices {
     if(values != null) {
       values.forEach((key, value) {
         PhModel data = PhModel.fromJson(value);
-        phDataObserver(data.value);
+        phDataObserver(data);
       });
     }
   }
 
-  void phDataObserver(double value){
+  void phDataObserver(PhModel data){
+    var value = data.value;
     StatusPh status = phFilter(value);
     if(status==StatusPh.Acidic || status==StatusPh.Alkaline){
       SensorType type = SensorType.pH;
@@ -213,7 +219,7 @@ class SensorsServices {
         body = "The soil is alkaline, click on the notification tio see more details";
       }
       NotificationService().showNotification(ID_PH, title, body);
-      NotificationService().saveNotification(type, status, value, title, body, false, DateTime.now());
+      NotificationService().saveNotification(data.Date, type, status, value, title, body, false, DateTime.now());
     }
   }
 
@@ -268,7 +274,7 @@ class SensorsServices {
         String title = "Nutrients telemetry data problem";
         String body = "Click on the notification tio see more details";
         NotificationService().showNotification(ID_NPK, title, body);
-        NotificationService().saveNotification(type, npkStatus, npkValue, title, body, false, DateTime.now());
+        NotificationService().saveNotification(data.Date, type, npkStatus, npkValue, title, body, false, DateTime.now());
       }
     }
   }
@@ -310,7 +316,7 @@ class SensorsServices {
       String title = "Disease Detected : "+data.state;
       String body = "Click on the notification tio see more details";
       NotificationService().showNotification(ID_DISEASE, title, body);
-      NotificationService().saveNotification(type, data.state, null, title, body, false, data.date);
+      NotificationService().saveNotification(data.dateInt, type, data.state, null, title, body, false, data.date);
     }
   }
 }

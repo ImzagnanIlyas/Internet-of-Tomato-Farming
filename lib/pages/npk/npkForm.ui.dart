@@ -290,6 +290,7 @@ class _NpkFormState extends State<NpkForm> {
                           print ("soilWeight  : $soilWeight");
                           print ("massOfSoilLayer / 1000000 = " + (massOfSoilLayer / 1000000).toString());
                           print ("Successful  : $massOfSoilLayer");
+                          Navigator.pushReplacementNamed(context, '/home');
                         }else{
                           print ("Unsuccessful");
                         }
