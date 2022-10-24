@@ -8,9 +8,9 @@ class NPKModel {
   NPKModel(this.n, this.p, this.k, this.Date);
 
   factory NPKModel.fromJson(Map<dynamic, dynamic> json) {
-    final n = json['N'] as double;
-    final p = json['P'] as double;
-    final k = json['K'] as double;
+    final n = json['N'];
+    final p = json['P'];
+    final k = json['K'];
     final Date = json['Date'] as int;
     return NPKModel(n.toDouble(), p.toDouble(), k.toDouble(), Date);
   }

@@ -54,7 +54,6 @@ class _SensorTabState extends State<SensorTab> {
         _now = DateTime.now().second.toString();
         //print(_now);
       });
-
     });
   }
 

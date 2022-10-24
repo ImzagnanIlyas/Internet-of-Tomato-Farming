@@ -96,7 +96,7 @@ class _PlantStatusTabState extends State<PlantStatusTab> {
                   ),
                   Center(
                     child: Padding(
-                      padding: isHealthy ? const EdgeInsets.only(top: 230, left: 200) : const EdgeInsets.only(top: 230, left: 10),
+                      padding: isHealthy ? const EdgeInsets.only(top: 230, left: 150) : const EdgeInsets.only(top: 230, left: 10),
                       child: ElevatedButton(
                         child:  Row(
                           children: [
