@@ -6,7 +6,7 @@ class MoistureModel {
   MoistureModel(this.value, this.Date);
 
   factory MoistureModel.fromJson(Map<dynamic, dynamic> json) {
-    final value = json['value'] as double;
+    final value = json['value'];
     final Date = json['Date'] as int;
     return MoistureModel(value.toDouble(), Date);
   }

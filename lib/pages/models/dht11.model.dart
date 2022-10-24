@@ -20,8 +20,8 @@ class Dht11Model {
   Dht11Model(this.humidity, this.temperature, this.dateInt);
 
   factory Dht11Model.fromJson(Map<dynamic, dynamic> json) {
-    final humidity = json['Humidity'] as double;
-    final temperature = json['Temperature'] as double;
+    final humidity = json['Humidity'];
+    final temperature = json['Temperature'];
     final dateInt = json['Date'] as int;
 
     return Dht11Model(humidity.toDouble(), temperature.toDouble(), dateInt);
