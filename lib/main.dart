@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
       '/home': (context) => HomePage(key: homePageKey,didNotificationLaunchApp: didNotificationLaunchApp),
       '/tempAndHumNotifDisplay': (context) => TempAndHumNotifDisplay(StatusTemp.Low, 39, 16),
       '/phNotifDisplay': (context) => PhNotifDisplay(11.1, StatusPh.Acidic),
-      '/npkNotifDisplay': (context) => NpkNotifDisplay(ConditionNpk.Low, ConditionNpk.Good, ConditionNpk.Low, 20, 30, 28, PlantGrowthStage.Stage1),
+      '/npkNotifDisplay': (context) => NpkNotifDisplay(ConditionNpk.Low, ConditionNpk.Good, ConditionNpk.Low, 20, 30, 28, PlantGrowthStage.Vegetative),
       '/npkForm': (context) => NpkForm(),
       '/moistureNotifDisplay': (context) => MoistureNotifDisplay(MoistureStatus.Dry, 30),
       '/notifications': (context) => NotificationsPage(),

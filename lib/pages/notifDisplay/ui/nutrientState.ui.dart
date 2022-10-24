@@ -131,7 +131,7 @@ class _NutrientStateState extends State<NutrientState> {
             SizedBox(
               height: 5,
             ),
-            Text(value.toString() + ' mg/Kg',
+            Text(value.toString() + ' kg/ha',
                 style: GoogleFonts.ptSans(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,

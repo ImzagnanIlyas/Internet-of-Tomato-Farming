@@ -45,14 +45,14 @@ class SensorsServices {
     else return StatusPh.Good;
   }
 
-  List<dynamic> npkFilter(double N, double P, double K, plantingDateString, massOfSoil) {
+  List<dynamic> npkFilter(double NinKgPerHa, double PinKgPerHa, double KinKgPerHa, plantingDateString) {
 
     DateTime plantingDate = DateFormat('dd-MM-yyyy').parse(plantingDateString);
     int weekOfPlanting = weeksBetween(plantingDate, DateTime.now());
 
-    double NinKgPerHa = massOfSoil * (N / 1000000);
+/*    double NinKgPerHa = massOfSoil * (N / 1000000);
     double PinKgPerHa = massOfSoil * (P / 1000000);
-    double KinKgPerHa = massOfSoil * (K / 1000000);
+    double KinKgPerHa = massOfSoil * (K / 1000000);*/
 
     print('current values : N = $NinKgPerHa, P = $PinKgPerHa, K = $KinKgPerHa');
     print('weeks passed : $weekOfPlanting');
@@ -233,9 +233,9 @@ class SensorsServices {
     // await service.savePlantingDate(DateTime.now());
     // await service.saveMassSoil(150);
     var plantingDate = await service.getPlantingDate();
-    var massOfSoil = await service.getMassSoil();
-    if(plantingDate != null && massOfSoil != null){
-      List<dynamic> results = npkFilter(data.n, data.p, data.k, plantingDate, massOfSoil);
+    //var massOfSoil = await service.getMassSoil();
+    if(plantingDate != null ){
+      List<dynamic> results = npkFilter(data.n, data.p, data.k, plantingDate);
       print("results length ::: "+results.length.toString());
       if(results.isNotEmpty){
         print("results ::: "+results.toString());
@@ -281,16 +281,16 @@ class SensorsServices {
     int weekOfPlanting = weeksBetween(plantingDate, DateTime.now());
 
     if(weekOfPlanting >= firstInterval[0] && weekOfPlanting <= firstInterval[1]){
-      return PlantGrowthStage.Stage1;
+      return PlantGrowthStage.Vegetative;
     }
     if(weekOfPlanting >= secondInterval[0] && weekOfPlanting <= secondInterval[1]){
-      return PlantGrowthStage.Stage2;
+      return PlantGrowthStage.Flowering;
     }
     if(weekOfPlanting >= thirdInterval[0] && weekOfPlanting <= thirdInterval[1]){
-      return PlantGrowthStage.Stage3;
+      return PlantGrowthStage.Fruit;
     }
 
-    return PlantGrowthStage.Stage1;
+    return PlantGrowthStage.Vegetative;
   }
 
   Future diseaseDataCallbackDispatcher() async{

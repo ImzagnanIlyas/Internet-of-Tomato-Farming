@@ -61,7 +61,7 @@ class NpkSensor extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(npkValues.value[0].toString()+ ' mg/Kg',
+                  Text(npkValues.value[0].toString()+ ' kg/ha',
                       style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,)),
@@ -99,7 +99,7 @@ class NpkSensor extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(npkValues.value[1].toString()+ ' mg/Kg',
+                  Text(npkValues.value[1].toString()+ ' kg/ha',
                       style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,)),
@@ -136,7 +136,7 @@ class NpkSensor extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(npkValues.value[2].toString()+ ' mg/Kg',
+                  Text(npkValues.value[2].toString()+ ' kg/ha',
                       style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,)),

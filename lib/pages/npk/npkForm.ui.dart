@@ -42,12 +42,14 @@ class _NpkFormState extends State<NpkForm> {
 
   void getFromPref() async {
     await preferenceService.getPlantingDate().then((value) => setState(() {_datePlant = value; print('date in state : $_datePlant');}));
-    await preferenceService.getMassSoil().then((value) => setState(() {_mass = value; print('mass in state : $_mass'); testNpk();} ));
+    //await preferenceService.getMassSoil().then((value) => setState(() {_mass = value; print('mass in state : $_mass'); } ));
   }
+/*
   void testNpk(){
     List<dynamic> results = sensorsService.npkFilter(224, 91, 83, _datePlant, _mass);
     print('results : $results');
   }
+*/
 
   @override
   Widget build(BuildContext context) {
