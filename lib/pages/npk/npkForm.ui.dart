@@ -249,21 +249,21 @@ class _NpkFormState extends State<NpkForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    height: 50,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TextButton(
-                      onPressed: () {
-                      },
-                      child: Text(
-                        'Skip',
-                        style: TextStyle(color: Colors.white, fontSize: 17),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 50,
+                  //   width: 150,
+                  //   decoration: BoxDecoration(
+                  //       color: Colors.grey,
+                  //       borderRadius: BorderRadius.circular(10)),
+                  //   child: TextButton(
+                  //     onPressed: () {
+                  //     },
+                  //     child: Text(
+                  //       'Skip',
+                  //       style: TextStyle(color: Colors.white, fontSize: 17),
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     height: 50,
                     width: 150,
