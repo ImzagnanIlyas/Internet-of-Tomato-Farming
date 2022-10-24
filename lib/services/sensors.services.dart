@@ -14,7 +14,7 @@ enum StatusTemp {High, Low, Good, Ideal, None}
 enum StatusPh {Acidic, Alkaline, Good}
 enum StatusNpk {N, P, K}
 enum ConditionNpk {High, Low, Good}
-enum PlantGrowthStage{Stage1, Stage2, Stage3}
+enum PlantGrowthStage{Vegetative, Flowering, Fruit}
 enum MoistureStatus{Good, Moisturized, Dry}
 enum SensorType{dht11, moisture, pH, npk, disease}
 

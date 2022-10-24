@@ -213,7 +213,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       'nitrogenCondition': ConditionNpk.Low,
       'phosphorusCondition': ConditionNpk.Good,
       'potassiumCondition': ConditionNpk.Low,
-      'plantGrowthStage': PlantGrowthStage.Stage1
+      'plantGrowthStage': PlantGrowthStage.Vegetative
     };
     List<NotificationModel> notifications = [
       NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
@@ -291,7 +291,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       'nitrogenCondition': ConditionNpk.Low,
       'phosphorusCondition': ConditionNpk.Good,
       'potassiumCondition': ConditionNpk.Low,
-      'plantGrowthStage': PlantGrowthStage.Stage1
+      'plantGrowthStage': PlantGrowthStage.Vegetative
     };
     List<NotificationModel> notifications = [
       NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
