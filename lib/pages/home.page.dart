@@ -8,6 +8,7 @@ import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/plantStatus.page.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/sensors.page.dart';
 import 'package:internet_of_tomato_farming/services/sensors.services.dart';
+import 'package:internet_of_tomato_farming/shared/notificationService.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 
 class HomePage extends StatefulWidget {
@@ -84,19 +85,25 @@ class HomePageState extends State<HomePage> {
       ]),
     };
 
+    int unreadNotifications = NotificationService().getUnreadNotificationNumber();
+
     return Scaffold(
       appBar: AppBar(
           title: Text('Home'),
           backgroundColor: Colors.lightGreen,
           actions: <Widget>[
-            Stack(
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.notifications_active, size: 30,),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/notifications');
-                    }),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton.extended(
+                  label: (unreadNotifications > 0) ? Text(unreadNotifications.toString()) : Container(),
+                  icon: Icon(Icons.notifications_active, size: 25,
+                    color: (unreadNotifications > 0) ? Colors.white : Colors.lightGreen
+                  ),
+                  backgroundColor: (unreadNotifications > 0) ? Colors.redAccent : Colors.white,
+                  elevation: 0,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/notifications');
+                  }),
             ),
           ]),
       body: ListView(children: [
