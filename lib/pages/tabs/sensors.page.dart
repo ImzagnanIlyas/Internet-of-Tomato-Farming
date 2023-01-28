@@ -49,7 +49,7 @@ class _SensorTabState extends State<SensorTab> {
     super.initState();
     _now = DateTime.now().second.toString();
     // defines a timer
-    _everySecond = Timer.periodic(Duration(seconds: 10), (Timer t) {
+    _everySecond = Timer.periodic(Duration(seconds: 5), (Timer t) {
       setState(() {
         _now = DateTime.now().second.toString();
         //print(_now);

@@ -39,7 +39,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           title: Text("Notifications"),
           backgroundColor: Colors.lightGreen,
           actions: [
-            IconButton(onPressed: clearData, icon: Icon(Icons.delete)),
+            // IconButton(onPressed: clearData, icon: Icon(Icons.delete)),
           //   IconButton(onPressed: saveDummyData, icon: Icon(Icons.save_alt)),
           ],
           bottom: TabBar(
@@ -63,36 +63,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
             if(snapshot.hasData){
               prefs = snapshot.data;
               List<NotificationModel> notifications = getNotifications();
-              List<Widget> items = _buildNotifsWidgets();
               if(notifications.isNotEmpty){
                   return Scrollbar(
                       isAlwaysShown: true,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         // child: ListView(children: _buildNotifsWidgets()),
-                        child: ListView.builder(
-                          itemCount: items.length,
-                          itemBuilder: (context, index) {
-                            return Dismissible(
-                                // Each Dismissible must contain a Key. Keys allow Flutter to
-                                // uniquely identify widgets.
-                                key: Key(notifications[index].id.toString()),
-                                // Provide a function that tells the app
-                                // what to do after an item has been swiped away.
-                                onDismissed: (direction) {
-                                  // Remove the item from the data source.
-                                  notifications.removeAt(index);
-                                  updateNotifications(notifications);
-                                  setState(() {});
-                                },
-                                child: Column(
-                                  children: [
-                                    items[index],
-                                    Divider()
-                                  ],
-                                )
-                            );
-                          },
+                        child: ListView(
+                          children: _buildNotifsWidgets(),
                         ),
                       ));
                 }else{
@@ -139,7 +117,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       widgets.add(
           ElevatedButton(
               onPressed: (){
-                markAsSeen(e.id);
+                markAsSeen(e);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -180,7 +158,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               )
           )
       );
-      // widgets.add(Divider());
+      widgets.add(Divider());
     }
 
     if(widgets.isEmpty){
@@ -243,6 +221,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   void clearData(){
     prefs.remove('notifications');
+    setState(() {});
     print("CLEARED");
   }
 
@@ -267,9 +246,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
     prefs.setString('notifications',jsonEncode(notifications));
   }
 
-  void markAsSeen(int id){
+  void markAsSeen(NotificationModel notif){
     List<NotificationModel> notifications = NotificationService().getNotifications();
-    int index = notifications.indexOfId(id);
+    int index = notifications.indexOfIdAndType(notif);
     if(index > -1){
       notifications[index].markAsSeen();
     }

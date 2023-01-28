@@ -108,13 +108,13 @@ class _NutrientStateState extends State<NutrientState> {
                   //splashColor: Colors.redAccent, // Splash color
                   onTap: () {},
                   child: SizedBox(
-                    width: 50,
-                    height: 50,
+                    width: 40,
+                    height: 40,
                     child: Center(
                         child: FaIcon(
                       icon,
                       color: Colors.white,
-                      size: 35,
+                      size: 25,
                     )),
                   ),
                 ),
@@ -125,7 +125,7 @@ class _NutrientStateState extends State<NutrientState> {
             ),
             Text(msg + ' : ',
                 style: GoogleFonts.ptSans(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.normal,
                 )),
             SizedBox(

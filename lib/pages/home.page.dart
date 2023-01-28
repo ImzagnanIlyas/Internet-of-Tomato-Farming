@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_beautiful_popup/main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_of_tomato_farming/pages/QA/nodePower.dart';
+import 'package:internet_of_tomato_farming/pages/QA/pin.page.dart';
 import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/plantStatus.page.dart';
 import 'package:internet_of_tomato_farming/pages/tabs/sensors.page.dart';
@@ -96,6 +98,30 @@ class HomePageState extends State<HomePage> {
           title: Text('Home'),
           backgroundColor: Colors.lightGreen,
           actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) => PinPage()),);
+                  },
+                  child: Icon(
+                    Icons.code,
+                    size: 25.0,
+                  ),
+                )
+            ),
+            Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) => NodePower()),);
+                  },
+                  child: Icon(
+                    Icons.power_settings_new,
+                    size: 25.0,
+                  ),
+                )
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton.extended(

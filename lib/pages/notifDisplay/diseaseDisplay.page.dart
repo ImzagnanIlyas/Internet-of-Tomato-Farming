@@ -34,7 +34,7 @@ class _DiseaseDisplayState extends State<DiseaseDisplay> {
                 data = DiseaseModel.fromJson(values);
               });
             }
-            return PlantStatusTab(NotificationDisease: data);
+            return SingleChildScrollView(child: PlantStatusTab(NotificationDisease: data));
           }else{
             return Center(
               child: CircularProgressIndicator(),

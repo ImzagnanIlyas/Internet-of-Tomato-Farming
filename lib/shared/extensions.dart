@@ -40,4 +40,10 @@ extension GetById on List<NotificationModel> {
     }
     return -1;
   }
+  int indexOfIdAndType(NotificationModel o){
+    for(int i = 0; i < length; i++){
+      if(this[i].id == o.id && this[i].type == o.type) return i;
+    }
+    return -1;
+  }
 }
