@@ -46,155 +46,156 @@ class _PlantStatusTabState extends State<PlantStatusTab> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _deviceRepo.getDiseaseData().once(),
-        builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-          diseaseData.clear();
-          if (snapshot.hasData) {
-            Map<dynamic, dynamic> values = snapshot.data!.value;
-            if(widget.NotificationDisease != null){
-              diseaseData.add(widget.NotificationDisease as DiseaseModel);
-            }else if (values == null) {
-              DiseaseModel data = DiseaseModel('', '', 0);
-              diseaseData.add(data);
-              _toast.showMsg(
-                  'No disease data to be shown');
-            } else {
-              values.forEach((key, values) {
-                DiseaseModel data = DiseaseModel.fromJson(values);
-                diseaseData.add(data);
-                // print(data);
-              });
-            }
-            isHealthy = isItHealthy(diseaseData.last.state);
-            print(diseaseData);
-            print(diseaseData.last);
-        return Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                 Align(alignment:Alignment.bottomCenter,child: CircleAvatar(
-                    backgroundColor: isHealthy ? Colors.lightGreen : Colors.red,
-                    radius: 160,
-                    child: ClipOval(
-                      // child: Image.asset(
-                      //   'assets/images/sickPlant.jpg',
-                      //   width: 310,
-                      //   height: 310,
-                      //   fit: BoxFit.fill,
-                      // ),
-                      child: Image.network(
-                          diseaseData.last.image,
-                          width: 310,
-                          height: 310,
-                          fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: isHealthy ? const EdgeInsets.only(top: 230, left: 150) : const EdgeInsets.only(top: 230, left: 10),
-                      child: ElevatedButton(
-                        child:  Row(
-                          children: [
-                            Text('Status : ', style: GoogleFonts.montserrat(
-                                 fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
-                          Text(
-                            this.status, style: GoogleFonts.montserrat(
-                                       fontSize: 18, fontWeight: FontWeight.normal, color: Colors.white),),
-                          ],
-                        ),
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom( // returns ButtonStyle
-                          primary: isHealthy ? Colors.lightGreen : Colors.red,
-                          onPrimary: Colors.white,
-                          fixedSize: Size(700, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      )
-                    ),
-                  ),
-                ],
-              ),
-              isHealthy == false ? Container(
-                child: Accordion(
-                  headerBackgroundColor: Colors.green,
-                  contentBorderColor: Colors.green,
-                  maxOpenSections: 2,
-                  children: [
-                    AccordionSection(
-                      isOpen: true,
-                      header: Text('Cause',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      content: Text(cause, style: GoogleFonts.montserrat(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black)),
-                      leftIcon: FaIcon(FontAwesomeIcons.triangleExclamation,
-                          color: Colors.white),
-                    ),
-                    AccordionSection(
-                      isOpen: true,
-                      header: Text('Symptoms',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      content: Text(
-                          symptoms, style: GoogleFonts.montserrat(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black)),
-                      leftIcon: FaIcon(FontAwesomeIcons.temperatureHigh,
-                          color: Colors.white),
-                    ),
-                    // AccordionSection(
-                    //   isOpen: true,
-                    //   header: Text('Conditions for disease development',
-                    //       style: GoogleFonts.montserrat(
-                    //           fontSize: 18,
-                    //           fontWeight: FontWeight.bold,
-                    //           color: Colors.white)),
-                    //   content: Text(
-                    //       'Passalora fulva is an efficient saprophyte and can survive as conidia and sclerotia in soil and plant debris for at least one year. Conidia are readily dispersed by wind and rain. Dissemination can also occur on workers’ clothing and equipment. High (90%) relative humidity and moderate (24°C) temperatures are optimal for disease development; however, disease can occur between 10 and 32°C. Leaf mold will not develop if relative humidity is less than 85%..', style: GoogleFonts.montserrat(
-                    //       fontSize: 15,
-                    //       fontWeight: FontWeight.normal,
-                    //       color: Colors.black)),
-                    //   leftIcon: FaIcon(FontAwesomeIcons.temperatureHigh,
-                    //       color: Colors.white),
-                    // ),
-                    AccordionSection(
-                      isOpen: true,
-                      header: Text('Control',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      content: Text(
-                          control, style: GoogleFonts.montserrat(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black)),
-                      leftIcon: FaIcon(FontAwesomeIcons.temperatureHigh,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-              ) : Container(),
-            ],
-          ),
-        );
-          }
-          return const Center(child: CircularProgressIndicator());
-        });
+    return Container();
+    // return FutureBuilder(
+    //     future: _deviceRepo.getDiseaseData().once(),
+    //     builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+    //       diseaseData.clear();
+    //       if (snapshot.hasData) {
+    //         Map<dynamic, dynamic> values = snapshot.data!.value;
+    //         if(widget.NotificationDisease != null){
+    //           diseaseData.add(widget.NotificationDisease as DiseaseModel);
+    //         }else if (values == null) {
+    //           DiseaseModel data = DiseaseModel('', '', 0);
+    //           diseaseData.add(data);
+    //           _toast.showMsg(
+    //               'No disease data to be shown');
+    //         } else {
+    //           values.forEach((key, values) {
+    //             DiseaseModel data = DiseaseModel.fromJson(values);
+    //             diseaseData.add(data);
+    //             // print(data);
+    //           });
+    //         }
+    //         isHealthy = isItHealthy(diseaseData.last.state);
+    //         print(diseaseData);
+    //         print(diseaseData.last);
+    //     return Padding(
+    //       padding: const EdgeInsets.all(8),
+    //       child: Column(
+    //         children: [
+    //           Stack(
+    //             children: [
+    //              Align(alignment:Alignment.bottomCenter,child: CircleAvatar(
+    //                 backgroundColor: isHealthy ? Colors.lightGreen : Colors.red,
+    //                 radius: 160,
+    //                 child: ClipOval(
+    //                   // child: Image.asset(
+    //                   //   'assets/images/sickPlant.jpg',
+    //                   //   width: 310,
+    //                   //   height: 310,
+    //                   //   fit: BoxFit.fill,
+    //                   // ),
+    //                   child: Image.network(
+    //                       diseaseData.last.image,
+    //                       width: 310,
+    //                       height: 310,
+    //                       fit: BoxFit.fill,
+    //                   ),
+    //                 ),
+    //               ),
+    //               ),
+    //               Center(
+    //                 child: Padding(
+    //                   padding: isHealthy ? const EdgeInsets.only(top: 230, left: 150) : const EdgeInsets.only(top: 230, left: 10),
+    //                   child: ElevatedButton(
+    //                     child:  Row(
+    //                       children: [
+    //                         Text('Status : ', style: GoogleFonts.montserrat(
+    //                              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+    //                       Text(
+    //                         this.status, style: GoogleFonts.montserrat(
+    //                                    fontSize: 18, fontWeight: FontWeight.normal, color: Colors.white),),
+    //                       ],
+    //                     ),
+    //                     onPressed: () {},
+    //                     style: ElevatedButton.styleFrom( // returns ButtonStyle
+    //                       primary: isHealthy ? Colors.lightGreen : Colors.red,
+    //                       onPrimary: Colors.white,
+    //                       fixedSize: Size(700, 50),
+    //                       shape: RoundedRectangleBorder(
+    //                         borderRadius: BorderRadius.circular(12),
+    //                       ),
+    //                     ),
+    //                   )
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //           isHealthy == false ? Container(
+    //             child: Accordion(
+    //               headerBackgroundColor: Colors.green,
+    //               contentBorderColor: Colors.green,
+    //               maxOpenSections: 2,
+    //               children: [
+    //                 AccordionSection(
+    //                   isOpen: true,
+    //                   header: Text('Cause',
+    //                       style: GoogleFonts.montserrat(
+    //                           fontSize: 18,
+    //                           fontWeight: FontWeight.bold,
+    //                           color: Colors.white)),
+    //                   content: Text(cause, style: GoogleFonts.montserrat(
+    //                       fontSize: 15,
+    //                       fontWeight: FontWeight.normal,
+    //                       color: Colors.black)),
+    //                   leftIcon: FaIcon(FontAwesomeIcons.triangleExclamation,
+    //                       color: Colors.white),
+    //                 ),
+    //                 AccordionSection(
+    //                   isOpen: true,
+    //                   header: Text('Symptoms',
+    //                       style: GoogleFonts.montserrat(
+    //                           fontSize: 18,
+    //                           fontWeight: FontWeight.bold,
+    //                           color: Colors.white)),
+    //                   content: Text(
+    //                       symptoms, style: GoogleFonts.montserrat(
+    //                       fontSize: 15,
+    //                       fontWeight: FontWeight.normal,
+    //                       color: Colors.black)),
+    //                   leftIcon: FaIcon(FontAwesomeIcons.temperatureHigh,
+    //                       color: Colors.white),
+    //                 ),
+    //                 // AccordionSection(
+    //                 //   isOpen: true,
+    //                 //   header: Text('Conditions for disease development',
+    //                 //       style: GoogleFonts.montserrat(
+    //                 //           fontSize: 18,
+    //                 //           fontWeight: FontWeight.bold,
+    //                 //           color: Colors.white)),
+    //                 //   content: Text(
+    //                 //       'Passalora fulva is an efficient saprophyte and can survive as conidia and sclerotia in soil and plant debris for at least one year. Conidia are readily dispersed by wind and rain. Dissemination can also occur on workers’ clothing and equipment. High (90%) relative humidity and moderate (24°C) temperatures are optimal for disease development; however, disease can occur between 10 and 32°C. Leaf mold will not develop if relative humidity is less than 85%..', style: GoogleFonts.montserrat(
+    //                 //       fontSize: 15,
+    //                 //       fontWeight: FontWeight.normal,
+    //                 //       color: Colors.black)),
+    //                 //   leftIcon: FaIcon(FontAwesomeIcons.temperatureHigh,
+    //                 //       color: Colors.white),
+    //                 // ),
+    //                 AccordionSection(
+    //                   isOpen: true,
+    //                   header: Text('Control',
+    //                       style: GoogleFonts.montserrat(
+    //                           fontSize: 18,
+    //                           fontWeight: FontWeight.bold,
+    //                           color: Colors.white)),
+    //                   content: Text(
+    //                       control, style: GoogleFonts.montserrat(
+    //                       fontSize: 15,
+    //                       fontWeight: FontWeight.normal,
+    //                       color: Colors.black)),
+    //                   leftIcon: FaIcon(FontAwesomeIcons.temperatureHigh,
+    //                       color: Colors.white),
+    //                 ),
+    //               ],
+    //             ),
+    //           ) : Container(),
+    //         ],
+    //       ),
+    //     );
+    //       }
+    //       return const Center(child: CircularProgressIndicator());
+    //     });
   }
 
   bool isItHealthy(String status){

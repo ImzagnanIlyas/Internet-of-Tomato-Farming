@@ -23,25 +23,25 @@ class _DiseaseDisplayState extends State<DiseaseDisplay> {
         title: Text("Disease Alert"),
         backgroundColor: Colors.lightGreen,
       ),
-      body: FutureBuilder(
-        future: _deviceRepo.getDiseaseDataByTime(widget.diseaseTime).once(),
-        builder: (context, AsyncSnapshot<DataSnapshot> snapshot){
-          if(snapshot.hasData){
-            Map<dynamic, dynamic> values = snapshot.data!.value;
-            DiseaseModel? data;
-            if(values != null){
-              values.forEach((key, values) {
-                data = DiseaseModel.fromJson(values);
-              });
-            }
-            return SingleChildScrollView(child: PlantStatusTab(NotificationDisease: data));
-          }else{
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+      // body: FutureBuilder(
+      //   future: _deviceRepo.getDiseaseDataByTime(widget.diseaseTime).once(),
+      //   builder: (context, AsyncSnapshot<DataSnapshot> snapshot){
+      //     if(snapshot.hasData){
+      //       Map<dynamic, dynamic> values = snapshot.data!.value;
+      //       DiseaseModel? data;
+      //       if(values != null){
+      //         values.forEach((key, values) {
+      //           data = DiseaseModel.fromJson(values);
+      //         });
+      //       }
+      //       return SingleChildScrollView(child: PlantStatusTab(NotificationDisease: data));
+      //     }else{
+      //       return Center(
+      //         child: CircularProgressIndicator(),
+      //       );
+      //     }
+      //   },
+      // ),
       // body: PlantStatusTab(NotificationDisease: widget.disease)
     );
   }

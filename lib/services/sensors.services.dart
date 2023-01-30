@@ -138,15 +138,15 @@ class SensorsServices {
 
   /// used in background process
   Future dht11DataCallbackDispatcher() async{
-    print('dht11DataCallbackDispatcher');
-    var values = (await DeviceRepo().getDht11DataLast15min().once()).value;
-    print(values);
-    if(values != null) {
-      values.forEach((key, value) {
-        Dht11Model data = Dht11Model.fromJson(value);
-        dh11DataObserver(data);
-      });
-    }
+    // print('dht11DataCallbackDispatcher');
+    // var values = (await DeviceRepo().getDht11DataLast15min().once()).value;
+    // print(values);
+    // if(values != null) {
+    //   values.forEach((key, value) {
+    //     Dht11Model data = Dht11Model.fromJson(value);
+    //     dh11DataObserver(data);
+    //   });
+    // }
   }
 
   /// used in dh11Repo & dht11DataCallbackDispatcher
@@ -173,13 +173,13 @@ class SensorsServices {
   }
 
   Future moistureDataCallbackDispatcher() async{
-    var values = (await DeviceRepo().getMoistureDataLast15min().once()).value;
-    if(values != null) {
-      values.forEach((key, value) {
-        MoistureModel data = MoistureModel.fromJson(value);
-        moistureDataObserver(data);
-      });
-    }
+    // var values = (await DeviceRepo().getMoistureDataLast15min().once()).value;
+    // if(values != null) {
+    //   values.forEach((key, value) {
+    //     MoistureModel data = MoistureModel.fromJson(value);
+    //     moistureDataObserver(data);
+    //   });
+    // }
   }
 
   void moistureDataObserver(MoistureModel data){
@@ -199,13 +199,13 @@ class SensorsServices {
   }
 
   Future phDataCallbackDispatcher() async{
-    var values = (await DeviceRepo().getPhDataLast15min().once()).value;
-    if(values != null) {
-      values.forEach((key, value) {
-        PhModel data = PhModel.fromJson(value);
-        phDataObserver(data);
-      });
-    }
+    // var values = (await DeviceRepo().getPhDataLast15min().once()).value;
+    // if(values != null) {
+    //   values.forEach((key, value) {
+    //     PhModel data = PhModel.fromJson(value);
+    //     phDataObserver(data);
+    //   });
+    // }
   }
 
   void phDataObserver(PhModel data){
@@ -225,13 +225,13 @@ class SensorsServices {
   }
 
   Future npkDataCallbackDispatcher() async{
-    var values = (await DeviceRepo().getNpkDataLast15min().once()).value;
-    if(values != null) {
-      values.forEach((key, value) {
-        NPKModel data = NPKModel.fromJson(value);
-        npkDataObserver(data);
-      });
-    }
+    // var values = (await DeviceRepo().getNpkDataLast15min().once()).value;
+    // if(values != null) {
+    //   values.forEach((key, value) {
+    //     NPKModel data = NPKModel.fromJson(value);
+    //     npkDataObserver(data);
+    //   });
+    // }
   }
 
   void npkDataObserver(NPKModel data) async{
@@ -301,13 +301,13 @@ class SensorsServices {
   }
 
   Future diseaseDataCallbackDispatcher() async{
-    var values = (await DeviceRepo().getDiseaseDataLast15min().once()).value;
-    if(values != null) {
-      values.forEach((key, value) {
-        DiseaseModel data = DiseaseModel.fromJson(value);
-        diseaseDataObserver(data);
-      });
-    }
+    // var values = (await DeviceRepo().getDiseaseDataLast15min().once()).value;
+    // if(values != null) {
+    //   values.forEach((key, value) {
+    //     DiseaseModel data = DiseaseModel.fromJson(value);
+    //     diseaseDataObserver(data);
+    //   });
+    // }
   }
 
   void diseaseDataObserver(DiseaseModel data){

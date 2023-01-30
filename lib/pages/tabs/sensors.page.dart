@@ -66,278 +66,278 @@ class _SensorTabState extends State<SensorTab> {
         children: [
           Column(
             children: [
-              FutureBuilder(
-                  future: _deviceRepo.getTemperatureAndHumidityData().once(),
-                  builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-                    dht11Data.clear();
-                    if (snapshot.hasData) {
-                      Map<dynamic, dynamic> values = snapshot.data!.value;
-                      if (values == null) {
-                        Dht11Model data = Dht11Model(0, 0, 0);
-                        dht11Data.add(data);
-                        // _toast.showMsg(
-                        //     'No temperature and humidity data to be shown');
-                      } else {
-                        values.forEach((key, values) {
-                          Dht11Model data = Dht11Model.fromJson(values);
-                          dht11Data.add(data);
-                          // //print(data);
-                        });
-                      }
-                      tempValue.value = dht11Data.last.temperature.toDouble();
-                      humidityValue.value = dht11Data.last.humidity.toDouble();
-                      // print(tempValue.value);
-                      // print(humidityValue.value);
-                      //print(dht11Data.last);
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Text('Temperature',
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold)),
-                                Card(
-                                  shadowColor: Colors.grey,
-                                  color: Colors.white,
-                                  elevation: 5,
-                                  child: Container(
-                                    width: 170.0,
-                                    height: 180,
-                                    //height: 300,
-                                    child: ValueListenableBuilder<double>(
-                                      valueListenable: tempValue,
-                                      builder: (context, value, child) {
-                                        return TemperatureGadget(tempValue);
-                                      },
-                                    ),
-                                    //new TemperatureGadget(tempValue.value),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text('Humidity',
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold)),
-                                Card(
-                                  shadowColor: Colors.grey,
-                                  color: Colors.white,
-                                  elevation: 5,
-                                  child: Container(
-                                    width: 170.0,
-                                    height: 180,
-                                    //height: 300,
-                                    child: ValueListenableBuilder<double>(
-                                      valueListenable: humidityValue,
-                                      builder: (context, value, child) {
-                                        return HumidityGadget(humidityValue);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return const Center(child: CircularProgressIndicator());
-                  }),
+              // FutureBuilder(
+              //     future: _deviceRepo.getTemperatureAndHumidityData().once(),
+              //     builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+              //       dht11Data.clear();
+              //       if (snapshot.hasData) {
+              //         Map<dynamic, dynamic> values = snapshot.data!.value;
+              //         if (values == null) {
+              //           Dht11Model data = Dht11Model(0, 0, 0);
+              //           dht11Data.add(data);
+              //           // _toast.showMsg(
+              //           //     'No temperature and humidity data to be shown');
+              //         } else {
+              //           values.forEach((key, values) {
+              //             Dht11Model data = Dht11Model.fromJson(values);
+              //             dht11Data.add(data);
+              //             // //print(data);
+              //           });
+              //         }
+              //         tempValue.value = dht11Data.last.temperature.toDouble();
+              //         humidityValue.value = dht11Data.last.humidity.toDouble();
+              //         // print(tempValue.value);
+              //         // print(humidityValue.value);
+              //         //print(dht11Data.last);
+              //         return Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: Row(
+              //             children: [
+              //               Column(
+              //                 children: [
+              //                   Text('Temperature',
+              //                       style: GoogleFonts.montserrat(
+              //                           fontSize: 17,
+              //                           fontWeight: FontWeight.bold)),
+              //                   Card(
+              //                     shadowColor: Colors.grey,
+              //                     color: Colors.white,
+              //                     elevation: 5,
+              //                     child: Container(
+              //                       width: 170.0,
+              //                       height: 180,
+              //                       //height: 300,
+              //                       child: ValueListenableBuilder<double>(
+              //                         valueListenable: tempValue,
+              //                         builder: (context, value, child) {
+              //                           return TemperatureGadget(tempValue);
+              //                         },
+              //                       ),
+              //                       //new TemperatureGadget(tempValue.value),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               Column(
+              //                 children: [
+              //                   Text('Humidity',
+              //                       style: GoogleFonts.montserrat(
+              //                           fontSize: 17,
+              //                           fontWeight: FontWeight.bold)),
+              //                   Card(
+              //                     shadowColor: Colors.grey,
+              //                     color: Colors.white,
+              //                     elevation: 5,
+              //                     child: Container(
+              //                       width: 170.0,
+              //                       height: 180,
+              //                       //height: 300,
+              //                       child: ValueListenableBuilder<double>(
+              //                         valueListenable: humidityValue,
+              //                         builder: (context, value, child) {
+              //                           return HumidityGadget(humidityValue);
+              //                         },
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //         );
+              //       }
+              //       return const Center(child: CircularProgressIndicator());
+              //     }),
               Padding(
                 padding: const EdgeInsets.only(right: 8, left: 8),
                 child: Row(
                   children: [
-                    FutureBuilder(
-                        future: _deviceRepo.getMoistureData().once(),
-                        builder:
-                            (context, AsyncSnapshot<DataSnapshot> snapshot) {
-                          moistureData.clear();
-                          if (snapshot.hasData) {
-                            Map<dynamic, dynamic> values = snapshot.data!.value;
-                            if (values == null) {
-                              MoistureModel data = MoistureModel(0, 0);
-                              moistureData.add(data);
-                              // _toast.showMsg('No moisture data to be shown');
-                            } else {
-                              values.forEach((key, values) {
-                                MoistureModel data =
-                                    MoistureModel.fromJson(values);
-                                moistureData.add(data);
-                                // //print(data);
-                              });
-                              // SensorsServices.FilterTemperatureAndTriggerNotif(
-                              //     moistureData.last.value.toDouble());
-                            }
-                            //print(moistureData);
-                            //print(moistureData.last);
-                            return Column(
-                              children: [
-                                Text('Moisture',
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold)),
-                                Card(
-                                  shadowColor: Colors.grey,
-                                  color: Colors.white,
-                                  elevation: 5,
-                                  child: Container(
-                                    width: 170.0,
-                                    height: 180,
-                                    //height: 300,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.water_drop,
-                                          color: Colors.lightBlue,
-                                          size: 70,
-                                        ),
-                                        Text(moistureData.last.value.toInt().toString(),
-                                            style: TextStyle(
-                                                fontSize: 60,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }),
-                    FutureBuilder(
-                        future: _deviceRepo.getPhData().once(),
-                        builder:
-                            (context, AsyncSnapshot<DataSnapshot> snapshot) {
-                          phData.clear();
-                          if (snapshot.hasData) {
-                            Map<dynamic, dynamic> values = snapshot.data!.value;
-                            if (values == null) {
-                              PhModel data = PhModel(0, 0);
-                              phData.add(data);
-                              // _toast.showMsg('No PH data to be shown');
-                            } else {
-                              values.forEach((key, values) {
-                                PhModel data = PhModel.fromJson(values);
-                                phData.add(data);
-                                // //print(data);
-                              });
-                              // SensorsServices.FilterTemperatureAndTriggerNotif(
-                              //     moistureData.last.value.toDouble());
-                            }
-                            phValue.value = phData.last.value.toDouble();
-                            //print(phValue.value);
-                            //print(phData);
-                            //print(phData.last);
-                            return Column(
-                              children: [
-                                Text('Ph',
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold)),
-                                Card(
-                                  shadowColor: Colors.grey,
-                                  color: Colors.white,
-                                  elevation: 5,
-                                  child: Container(
-                                    width: 170.0,
-                                    height: 180,
-                                    //height: 300,
-                                    child: ValueListenableBuilder<double>(
-                                      valueListenable: phValue,
-                                      builder: (context, value, child) {
-                                        return PhGadget(phValue);
-                                      },
-                                    ),
-
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }),
+                    // FutureBuilder(
+                    //     future: _deviceRepo.getMoistureData().once(),
+                    //     builder:
+                    //         (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                    //       moistureData.clear();
+                    //       if (snapshot.hasData) {
+                    //         Map<dynamic, dynamic> values = snapshot.data!.value;
+                    //         if (values == null) {
+                    //           MoistureModel data = MoistureModel(0, 0);
+                    //           moistureData.add(data);
+                    //           // _toast.showMsg('No moisture data to be shown');
+                    //         } else {
+                    //           values.forEach((key, values) {
+                    //             MoistureModel data =
+                    //                 MoistureModel.fromJson(values);
+                    //             moistureData.add(data);
+                    //             // //print(data);
+                    //           });
+                    //           // SensorsServices.FilterTemperatureAndTriggerNotif(
+                    //           //     moistureData.last.value.toDouble());
+                    //         }
+                    //         //print(moistureData);
+                    //         //print(moistureData.last);
+                    //         return Column(
+                    //           children: [
+                    //             Text('Moisture',
+                    //                 style: GoogleFonts.montserrat(
+                    //                     fontSize: 17,
+                    //                     fontWeight: FontWeight.bold)),
+                    //             Card(
+                    //               shadowColor: Colors.grey,
+                    //               color: Colors.white,
+                    //               elevation: 5,
+                    //               child: Container(
+                    //                 width: 170.0,
+                    //                 height: 180,
+                    //                 //height: 300,
+                    //                 child: Row(
+                    //                   mainAxisAlignment:
+                    //                       MainAxisAlignment.center,
+                    //                   children: [
+                    //                     const Icon(
+                    //                       Icons.water_drop,
+                    //                       color: Colors.lightBlue,
+                    //                       size: 70,
+                    //                     ),
+                    //                     Text(moistureData.last.value.toInt().toString(),
+                    //                         style: TextStyle(
+                    //                             fontSize: 60,
+                    //                             fontWeight: FontWeight.bold)),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         );
+                    //       }
+                    //       return const Center(
+                    //           child: CircularProgressIndicator());
+                    //     }),
+                    // FutureBuilder(
+                    //     future: _deviceRepo.getPhData().once(),
+                    //     builder:
+                    //         (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                    //       phData.clear();
+                    //       if (snapshot.hasData) {
+                    //         Map<dynamic, dynamic> values = snapshot.data!.value;
+                    //         if (values == null) {
+                    //           PhModel data = PhModel(0, 0);
+                    //           phData.add(data);
+                    //           // _toast.showMsg('No PH data to be shown');
+                    //         } else {
+                    //           values.forEach((key, values) {
+                    //             PhModel data = PhModel.fromJson(values);
+                    //             phData.add(data);
+                    //             // //print(data);
+                    //           });
+                    //           // SensorsServices.FilterTemperatureAndTriggerNotif(
+                    //           //     moistureData.last.value.toDouble());
+                    //         }
+                    //         phValue.value = phData.last.value.toDouble();
+                    //         //print(phValue.value);
+                    //         //print(phData);
+                    //         //print(phData.last);
+                    //         return Column(
+                    //           children: [
+                    //             Text('Ph',
+                    //                 style: GoogleFonts.montserrat(
+                    //                     fontSize: 17,
+                    //                     fontWeight: FontWeight.bold)),
+                    //             Card(
+                    //               shadowColor: Colors.grey,
+                    //               color: Colors.white,
+                    //               elevation: 5,
+                    //               child: Container(
+                    //                 width: 170.0,
+                    //                 height: 180,
+                    //                 //height: 300,
+                    //                 child: ValueListenableBuilder<double>(
+                    //                   valueListenable: phValue,
+                    //                   builder: (context, value, child) {
+                    //                     return PhGadget(phValue);
+                    //                   },
+                    //                 ),
+                    //
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         );
+                    //       }
+                    //       return const Center(
+                    //           child: CircularProgressIndicator());
+                    //     }),
                   ],
                 ),
               ),
-              FutureBuilder(
-                  future: _deviceRepo.getNpkData().once(),
-                  builder:
-                      (context, AsyncSnapshot<DataSnapshot> snapshot) {
-                        npkData.clear();
-                    if (snapshot.hasData) {
-                      Map<dynamic, dynamic> values = snapshot.data!.value;
-                      if (values == null) {
-                        NPKModel data = NPKModel(0, 0, 0, 0);
-                        npkData.add(data);
-                        // _toast.showMsg('No NPK data to be shown');
-                      } else {
-                        values.forEach((key, values) {
-                          NPKModel data = NPKModel.fromJson(values);
-                          npkData.add(data);
-                          //print(data);
-                        });
-                        // SensorsServices.FilterTemperatureAndTriggerNotif(
-                        //     moistureData.last.value.toDouble());
-                      }
-                      npkValues.value[0] = npkData.last.n.toDouble();
-                      npkValues.value[1] = npkData.last.p.toDouble();
-                      npkValues.value[2] = npkData.last.k.toDouble();
-                      // nValue.value = npkData.last.n.toDouble();
-                      // pValue.value = npkData.last.p.toDouble();
-                      // kValue.value = npkData.last.k.toDouble();
-                      // print(nValue.value);
-                      // print(pValue.value);
-                      // print(kValue.value);
-                      //print(npkData);
-                      //print(npkData.last);
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8, left: 8, top: 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Text('NPK Sensor',
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 17, fontWeight: FontWeight.bold)),
-                                Card(
-                                  shadowColor: Colors.grey,
-                                  color: Colors.white,
-                                  elevation: 5,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                    child: SizedBox(
-                                        width: 260.0,
-                                        height: 180,
-                                        //height: 300,
-                                        child: ValueListenableBuilder<List<double>>(
-                                          valueListenable: npkValues,
-                                          builder: (context, value, child) {
-                                            return NpkSensor(npkValues);
-                                          },
-                                        ),
-
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      );
-                    }
-                    return const Center(
-                        child: CircularProgressIndicator());
-                  }),
+              // FutureBuilder(
+              //     future: _deviceRepo.getNpkData().once(),
+              //     builder:
+              //         (context, AsyncSnapshot<DataSnapshot> snapshot) {
+              //           npkData.clear();
+              //       if (snapshot.hasData) {
+              //         Map<dynamic, dynamic> values = snapshot.data!.value;
+              //         if (values == null) {
+              //           NPKModel data = NPKModel(0, 0, 0, 0);
+              //           npkData.add(data);
+              //           // _toast.showMsg('No NPK data to be shown');
+              //         } else {
+              //           values.forEach((key, values) {
+              //             NPKModel data = NPKModel.fromJson(values);
+              //             npkData.add(data);
+              //             //print(data);
+              //           });
+              //           // SensorsServices.FilterTemperatureAndTriggerNotif(
+              //           //     moistureData.last.value.toDouble());
+              //         }
+              //         npkValues.value[0] = npkData.last.n.toDouble();
+              //         npkValues.value[1] = npkData.last.p.toDouble();
+              //         npkValues.value[2] = npkData.last.k.toDouble();
+              //         // nValue.value = npkData.last.n.toDouble();
+              //         // pValue.value = npkData.last.p.toDouble();
+              //         // kValue.value = npkData.last.k.toDouble();
+              //         // print(nValue.value);
+              //         // print(pValue.value);
+              //         // print(kValue.value);
+              //         //print(npkData);
+              //         //print(npkData.last);
+              //         return Padding(
+              //           padding: const EdgeInsets.only(right: 8, left: 8, top: 4),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             children: [
+              //               Column(
+              //                 children: [
+              //                   Text('NPK Sensor',
+              //                       style: GoogleFonts.montserrat(
+              //                           fontSize: 17, fontWeight: FontWeight.bold)),
+              //                   Card(
+              //                     shadowColor: Colors.grey,
+              //                     color: Colors.white,
+              //                     elevation: 5,
+              //                     child: Padding(
+              //                       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              //                       child: SizedBox(
+              //                           width: 260.0,
+              //                           height: 180,
+              //                           //height: 300,
+              //                           child: ValueListenableBuilder<List<double>>(
+              //                             valueListenable: npkValues,
+              //                             builder: (context, value, child) {
+              //                               return NpkSensor(npkValues);
+              //                             },
+              //                           ),
+              //
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               )
+              //             ],
+              //           ),
+              //         );
+              //       }
+              //       return const Center(
+              //           child: CircularProgressIndicator());
+              //     }),
             ],
           ),
         ],
