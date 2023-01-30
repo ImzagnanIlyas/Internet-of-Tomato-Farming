@@ -328,6 +328,7 @@ class _ThresholdsFormState extends State<ThresholdsForm> {
       "thresholdKMax":kMaxTEC.text
       };
       FirebaseHelperRepo().saveThresholds(data);
+      Navigator.pushNamed(context, "/GridForm");
     }
   }
 
