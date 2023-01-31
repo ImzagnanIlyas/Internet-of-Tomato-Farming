@@ -16,8 +16,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // }
 
 class NpkSensor extends StatelessWidget {
-  final ValueListenable<List<double>> npkValues;
+  // final ValueListenable<List<double>> npkValues;
 
+  List<double> npkValues;
   // final ValueListenable<double> n_value;
   // final ValueListenable<double> p_value;
   // final ValueListenable<double> k_value;
@@ -33,7 +34,7 @@ class NpkSensor extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 30.0),
+          padding: const EdgeInsets.only(left: 10.0),
           child: Row(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -43,7 +44,7 @@ class NpkSensor extends StatelessWidget {
                   child: InkWell(
                     splashColor: Colors.redAccent, // Splash color
                     onTap: () {},
-                    child: SizedBox(width: 45, height: 45, child: Center(child: FaIcon(FontAwesomeIcons.n, color: Colors.white, size: 20,)),),
+                    child: SizedBox(width: 30, height: 30, child: Center(child: FaIcon(FontAwesomeIcons.n, color: Colors.white, size: 10,)),),
                   ),
                 ),
               ),
@@ -55,15 +56,15 @@ class NpkSensor extends StatelessWidget {
                 children: [
                   Text('nitrogen : ',
                       style: GoogleFonts.montserrat(
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.normal,
                           color: Colors.grey)),
                   SizedBox(
                     height: 5,
                   ),
-                  Text(npkValues.value[0].toString()+ ' kg/ha',
+                  Text(npkValues[0].toString()+ ' kg/ha',
                       style: GoogleFonts.montserrat(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,)),
                 ],
               )
@@ -71,7 +72,7 @@ class NpkSensor extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 30.0),
+          padding: const EdgeInsets.only(left: 10.0),
           child: Row(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -81,7 +82,7 @@ class NpkSensor extends StatelessWidget {
                   child: InkWell(
                     splashColor: Colors.blueAccent, // Splash color
                     onTap: () {},
-                    child: SizedBox(width: 45, height: 45, child: Center(child: FaIcon(FontAwesomeIcons.p, color: Colors.white, size: 20,)),),
+                    child: SizedBox(width: 30, height: 30, child: Center(child: FaIcon(FontAwesomeIcons.p, color: Colors.white, size: 10,)),),
                   ),
                 ),
               ),
@@ -93,15 +94,15 @@ class NpkSensor extends StatelessWidget {
                 children: [
                   Text('phosphorus : ',
                       style: GoogleFonts.montserrat(
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.normal,
                           color: Colors.grey)),
                   SizedBox(
                     height: 5,
                   ),
-                  Text(npkValues.value[1].toString()+ ' kg/ha',
+                  Text(npkValues[1].toString()+ ' kg/ha',
                       style: GoogleFonts.montserrat(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,)),
                 ],
               )
@@ -109,7 +110,7 @@ class NpkSensor extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 30.0),
+          padding: const EdgeInsets.only(left: 10.0),
           child: Row(
             children: [
               ClipOval(
@@ -118,7 +119,7 @@ class NpkSensor extends StatelessWidget {
                   child: InkWell(
                     splashColor: Colors.purpleAccent, // Splash color
                     onTap: () {},
-                    child: SizedBox(width: 45, height: 45, child: Center(child: FaIcon(FontAwesomeIcons.k, color: Colors.white, size: 20,)),),
+                    child: SizedBox(width: 30, height: 30, child: Center(child: FaIcon(FontAwesomeIcons.k, color: Colors.white, size: 10,)),),
                   ),
                 ),
               ),
@@ -130,15 +131,15 @@ class NpkSensor extends StatelessWidget {
                 children: [
                   Text('potasssium : ',
                       style: GoogleFonts.montserrat(
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.normal,
                           color: Colors.grey)),
                   SizedBox(
                     height: 5,
                   ),
-                  Text(npkValues.value[2].toString()+ ' kg/ha',
+                  Text(npkValues[2].toString()+ ' kg/ha',
                       style: GoogleFonts.montserrat(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,)),
                 ],
               )

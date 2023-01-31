@@ -10,8 +10,8 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 //   State<PhGadget> createState() => _PhState(valuePh);
 // }
 class PhGadget extends StatelessWidget {
-  final ValueListenable<double> valuePh;
-
+  // final ValueListenable<double> valuePh;
+  final valuePh;
   PhGadget(this.valuePh);
 
   double width = 0.4;
@@ -169,7 +169,7 @@ class PhGadget extends StatelessWidget {
             ],
             pointers: <GaugePointer>[
               NeedlePointer(
-                value: valuePh.value,
+                value: valuePh,
                 lengthUnit: GaugeSizeUnit.factor,
                 needleLength: 0.7,
                 needleStartWidth: 0.5, needleEndWidth: 4,

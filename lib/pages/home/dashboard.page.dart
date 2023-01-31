@@ -16,7 +16,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Home'),
+          title: Text('Dashboard'),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -33,7 +33,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ]
       ),
-      body: DashboardGadgets()
+      body: SingleChildScrollView(child: DashboardGadgets())
     );
   }
 }

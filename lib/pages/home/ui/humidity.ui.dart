@@ -12,9 +12,9 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 // }
 
 class HumidityGadget extends StatelessWidget {
-  final ValueListenable<double> valueHumidity;
+  // final ValueListenable<double> valueHumidity;
 
-  //var valueHumidity;
+  var valueHumidity;
 
 
   HumidityGadget(this.valueHumidity);
@@ -39,13 +39,13 @@ class HumidityGadget extends StatelessWidget {
                 ),
                 pointers: <GaugePointer>[
                   RangePointer(
-                      value: 70,
+                      value: valueHumidity,
                       width: 10,
                       color: Colors.lightBlueAccent,
                       cornerStyle: CornerStyle.bothCurve
                   ),
                   MarkerPointer(
-                    value: 69,
+                    value: valueHumidity,
                     markerHeight: 10, markerWidth: 10,
                     markerType: MarkerType.circle, color: Colors.white,
                   ),
@@ -53,7 +53,7 @@ class HumidityGadget extends StatelessWidget {
                 annotations: <GaugeAnnotation>[
                   GaugeAnnotation(
                       axisValue: 50,
-                      widget: Text(valueHumidity.value.toString()+' %',
+                      widget: Text(valueHumidity.toString()+' %',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
