@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home.page.dart';
+import 'package:internet_of_tomato_farming/pages/home/dashboard.page.dart';
 import 'package:internet_of_tomato_farming/pages/initial-info/thresholdsForm.ui.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/moistureNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/npkDisplay.page.dart';
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
       '/qr': (context) => QRViewPage(),
       '/thresholdsForm': (context) => ThresholdsForm(),
       '/gridForm': (context) => GridForm(),
-      '/home': (context) => HomePage(key: homePageKey,didNotificationLaunchApp: didNotificationLaunchApp),
+      '/home': (context) => Dashboard(),
       '/tempAndHumNotifDisplay': (context) => TempAndHumNotifDisplay(StatusTemp.Low, 39, 16),
       '/phNotifDisplay': (context) => PhNotifDisplay(11.1, StatusPh.Acidic),
       '/npkNotifDisplay': (context) => NpkNotifDisplay(ConditionNpk.Low, ConditionNpk.Good, ConditionNpk.Low, 20, 30, 28, PlantGrowthStage.Vegetative),
