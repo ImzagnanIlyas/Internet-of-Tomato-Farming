@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'IoTF',
       theme: ThemeData(
-        primaryColor: Colors.lightGreen
+        primarySwatch: Colors.green
       ),
       routes: routes,
       initialRoute: '/home',
