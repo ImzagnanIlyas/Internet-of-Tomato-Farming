@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:internet_of_tomato_farming/pages/home.page.dart';
+import 'package:internet_of_tomato_farming/pages/initial-info/thresholdsForm.ui.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/moistureNotifDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/npkDisplay.page.dart';
 import 'package:internet_of_tomato_farming/pages/notifDisplay/phNotifDisplay.page.dart';
@@ -13,6 +13,8 @@ import 'package:internet_of_tomato_farming/repos/deviceRepo.dart';
 import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 import 'package:internet_of_tomato_farming/shared/notificationService.dart';
 import 'package:workmanager/workmanager.dart';
+
+import 'pages/initial-info/gridForm.ui.dart';
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async{
@@ -62,6 +64,8 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key, required this.isLogged, this.didNotificationLaunchApp = false}) :super(key: key){
     routes = {
       '/qr': (context) => QRViewPage(),
+      '/thresholdsForm': (context) => ThresholdsForm(),
+      '/gridForm': (context) => GridForm(),
       '/home': (context) => HomePage(key: homePageKey,didNotificationLaunchApp: didNotificationLaunchApp),
       '/tempAndHumNotifDisplay': (context) => TempAndHumNotifDisplay(StatusTemp.Low, 39, 16),
       '/phNotifDisplay': (context) => PhNotifDisplay(11.1, StatusPh.Acidic),
