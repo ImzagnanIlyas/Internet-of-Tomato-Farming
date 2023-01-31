@@ -13,8 +13,8 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 //   State<TemperatureGadget> createState() => _TemperatureGadgetState(valueTemp.value);
 // }
 class TemperatureGadget extends StatelessWidget {
-  final ValueListenable<double> valueTemp;
-  //var valueTemp;
+  // final ValueListenable<double> valueTemp;
+  var valueTemp;
 
 
   TemperatureGadget(this.valueTemp);
@@ -80,7 +80,7 @@ class TemperatureGadget extends StatelessWidget {
             ],
             pointers: <GaugePointer>[
               NeedlePointer(
-                  value: valueTemp.value, needleColor: Colors.black,
+                  value: valueTemp, needleColor: Colors.black,
                   tailStyle: TailStyle(length: 0.18, width: 8,
                       color: Colors.black,
                       lengthUnit: GaugeSizeUnit.factor),
