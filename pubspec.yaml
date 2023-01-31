@@ -39,6 +39,7 @@ dependencies:
   firebase_core: ^2.4.1
   firebase_database: ^10.0.9
   cloud_firestore: ^4.3.1
+  firebase_messaging: ^14.2.1
   #syncfusion_flutter_gauges: ^20.2.50
   syncfusion_flutter_gauges: ^18.1.45
   accordion: ^2.3.0
