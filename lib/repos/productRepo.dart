@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductRepo{
-  static String? pid; // product id
+  static String? pid = "1111"; // product id
 
   void initService() async {
     var prefs = await SharedPreferences.getInstance();
@@ -15,6 +15,12 @@ class ProductRepo{
   Stream<DatabaseEvent> getAggregationDataStream(){
     return FirebaseDatabase.instance
         .ref('products/$pid/aggregation')
+        .onValue;
+  }
+
+  Stream<DatabaseEvent> getNodesDataStream(){
+    return FirebaseDatabase.instance
+        .ref('products/$pid/nodes')
         .onValue;
   }
 

@@ -21,11 +21,13 @@ class _DashboardGadgetsState extends State<DashboardGadgets> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: StreamBuilder(
-          stream: _productRepo.getAggregationDataStream(),
-          builder: _streamBuilder
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: StreamBuilder(
+            stream: _productRepo.getAggregationDataStream(),
+            builder: _streamBuilder
+        ),
       ),
     );
   }
