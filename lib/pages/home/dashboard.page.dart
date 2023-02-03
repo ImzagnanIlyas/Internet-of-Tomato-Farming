@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_of_tomato_farming/pages/home/dashboardGadgets.ui.dart';
 import 'package:internet_of_tomato_farming/pages/home/heatmap/heatmap.page.dart';
+import 'package:internet_of_tomato_farming/pages/home/take-picture/takePictureScreen.dart';
 import 'package:internet_of_tomato_farming/shared/notificationService.dart';
 
 class Dashboard extends StatefulWidget {
@@ -11,7 +13,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int unreadNotifications = NotificationService().getUnreadNotificationNumber();
+  // int unreadNotifications = NotificationService().getUnreadNotificationNumber();
+  int unreadNotifications = 0;
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
@@ -66,6 +69,23 @@ class _DashboardState extends State<Dashboard> {
         onTap: _onItemTapped,
         backgroundColor: Colors.white,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _pushToTakePictureScreen,
+        child: const Icon(Icons.camera_alt),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  void _pushToTakePictureScreen() async{
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    final firstCamera = cameras.first;
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => TakePictureScreen(firstCamera))
     );
   }
 }

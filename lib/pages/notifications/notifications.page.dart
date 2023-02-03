@@ -112,7 +112,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             e.status['plantGrowthStage']
         );
       }else if(e.type == SensorType.disease){
-        nextUI = DiseaseDisplay(diseaseTime: e.time);
+        // nextUI = DiseaseDisplay(diseaseTime: e.time);
       }
       widgets.add(
           ElevatedButton(

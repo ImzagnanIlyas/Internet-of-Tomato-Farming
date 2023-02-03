@@ -157,7 +157,7 @@ class HomePageState extends State<HomePage> {
             setState(() {});
             launchCallbackDispatchers();
           },
-          child: (_currentSelection == 0) ? SensorTab() : PlantStatusTab(),
+          // child: (_currentSelection == 0) ? SensorTab() : PlantStatusTab(),
         ),
       ]),
     );

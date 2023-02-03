@@ -32,27 +32,27 @@ void callbackDispatcher() {
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  bool didNotificationLaunchApp = await NotificationService().initNotification();
+  // bool didNotificationLaunchApp = await NotificationService().initNotification();
   bool isLogged = await DeviceRepo.initializeFirebase();
 
-  Workmanager().cancelAll();
-  Workmanager().initialize(
-      callbackDispatcher,
-      // isInDebugMode: true,
-  );
-  Workmanager().registerPeriodicTask(
-    "checkSensorData", "checkSensorData",
-    frequency: Duration(minutes: 15),
-    constraints: Constraints(
-        networkType: NetworkType.connected,
-        requiresBatteryNotLow: false,
-        requiresCharging: false,
-        requiresDeviceIdle: false,
-        requiresStorageNotLow: false
-    )
-  );
+  // Workmanager().cancelAll();
+  // Workmanager().initialize(
+  //     callbackDispatcher,
+  //     // isInDebugMode: true,
+  // );
+  // Workmanager().registerPeriodicTask(
+  //   "checkSensorData", "checkSensorData",
+  //   frequency: Duration(minutes: 15),
+  //   constraints: Constraints(
+  //       networkType: NetworkType.connected,
+  //       requiresBatteryNotLow: false,
+  //       requiresCharging: false,
+  //       requiresDeviceIdle: false,
+  //       requiresStorageNotLow: false
+  //   )
+  // );
 
-  runApp(MyApp(isLogged: isLogged, didNotificationLaunchApp: didNotificationLaunchApp));
+  runApp(MyApp(isLogged: isLogged, didNotificationLaunchApp: false));
 }
 
 class MyApp extends StatelessWidget {
