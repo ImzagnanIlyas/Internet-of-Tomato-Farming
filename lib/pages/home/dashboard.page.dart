@@ -9,12 +9,11 @@ class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<Dashboard> createState() => DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
-  // int unreadNotifications = NotificationService().getUnreadNotificationNumber();
-  int unreadNotifications = 0;
+class DashboardState extends State<Dashboard> {
+  // int unreadNotifications = 0;
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
@@ -31,6 +30,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    int unreadNotifications = NotificationService().getUnreadNotificationNumber();
+
     return Scaffold(
       appBar: AppBar(
           title: Text('Home'),

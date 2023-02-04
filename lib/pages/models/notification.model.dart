@@ -2,7 +2,7 @@ import 'package:internet_of_tomato_farming/pages/models/dht11.model.dart';
 import 'package:internet_of_tomato_farming/services/sensors.services.dart';
 
 class NotificationModel {
-  int id;
+  String id;
   SensorType type;
   dynamic status;
   dynamic value;
@@ -14,7 +14,7 @@ class NotificationModel {
   NotificationModel(this.id, this.type, this.status, this.value, this.title, this.body, this.seen, this.time);
 
   factory NotificationModel.fromJson(Map<dynamic, dynamic> json) {
-    final id = json['id'] as int;
+    final id = json['id'] as String;
     final type = SensorType.values[json['type'] as int];
     final status = (type == SensorType.dht11)
       ? StatusTemp.values[json['status'] as int]

@@ -37,25 +37,24 @@ class _NotificationsPageState extends State<NotificationsPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Notifications"),
-          backgroundColor: Colors.lightGreen,
           actions: [
-            // IconButton(onPressed: clearData, icon: Icon(Icons.delete)),
+            IconButton(onPressed: clearData, icon: Icon(Icons.delete)),
           //   IconButton(onPressed: saveDummyData, icon: Icon(Icons.save_alt)),
           ],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: 'Sensors'),
-              Tab(text: 'Diseases'),
-            ],
-            indicatorWeight: 5,
-            indicatorColor: Colors.white,
-            labelColor: Colors.white,
-            onTap: (i){
-              setState(() {
-                index=i;
-              });
-            },
-          ),
+          // bottom: TabBar(
+          //   tabs: [
+          //     Tab(text: 'Sensors'),
+          //     Tab(text: 'Diseases'),
+          //   ],
+          //   indicatorWeight: 5,
+          //   indicatorColor: Colors.white,
+          //   labelColor: Colors.white,
+          //   onTap: (i){
+          //     setState(() {
+          //       index=i;
+          //     });
+          //   },
+          // ),
         ),
         body: FutureBuilder(
           future: initPrefs(),
@@ -90,7 +89,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
     List<Widget> widgets = [];
     for(NotificationModel e in notifications){
-      Color backgroundColor = (e.seen) ? Colors.grey[300]! : Colors.lightGreen;
+      Color backgroundColor = (e.seen) ? Colors.grey[300]! : Colors.green;
       Color foregroundColor = (e.seen) ? Colors.black : Colors.white;
       IconData icon = (e.seen) ? Icons.notifications_none : Icons.notifications_active;
       Color iconColor = (e.seen) ? Colors.black45 : Colors.white;
@@ -172,52 +171,52 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return widgets;
   }
 
-  void saveDummyData(){
-    int id = prefs.getInt('notificationID');
-    if(id == null){
-      prefs.setInt('notificationID', 0);
-      id = 0;
-    }
-    Map<String, dynamic> dht1Value = {
-      'temperature': 11,
-      'humidity': 80
-    };
-    Map<String, dynamic> npkValue = {
-      'nitrogenValue': 20.2,
-      'phosphorusValue': 30.1,
-      'potassiumValue': 28.3
-    };
-    Map<String, dynamic> npkStatus = {
-      'nitrogenCondition': ConditionNpk.Low,
-      'phosphorusCondition': ConditionNpk.Good,
-      'potassiumCondition': ConditionNpk.Low,
-      'plantGrowthStage': PlantGrowthStage.Vegetative
-    };
-    List<NotificationModel> notifications = [
-      NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
-          "Low Temperature : 11",
-          "The temperature of your plant is low, click on the notification tio see more details",
-          false, DateTime(2022,10,08)
-      ),
-      NotificationModel(id++, SensorType.moisture, MoistureStatus.Moisturized, 85,
-          "High Moisture : 85%",
-          "The soil is over moisturized, click on the notification tio see more details",
-          true, DateTime(2022,10,1)
-      ),
-      NotificationModel(id++, SensorType.pH, StatusPh.Acidic, 3.2,
-          "Low pH : 3.2",
-          "The soil is acidic, click on the notification tio see more details",
-          true, DateTime(2022,9,25)
-      ),
-      NotificationModel(id++, SensorType.npk, npkStatus, npkValue,
-          "NPK telemetry data problem",
-          "Click on the notification tio see more details",
-          true, DateTime(2022,8,16)
-      ),
-    ];
-    prefs.setString('notifications',jsonEncode(notifications));
-    print("SAVED");
-  }
+  // void saveDummyData(){
+  //   int id = prefs.getInt('notificationID');
+  //   if(id == null){
+  //     prefs.setInt('notificationID', 0);
+  //     id = 0;
+  //   }
+  //   Map<String, dynamic> dht1Value = {
+  //     'temperature': 11,
+  //     'humidity': 80
+  //   };
+  //   Map<String, dynamic> npkValue = {
+  //     'nitrogenValue': 20.2,
+  //     'phosphorusValue': 30.1,
+  //     'potassiumValue': 28.3
+  //   };
+  //   Map<String, dynamic> npkStatus = {
+  //     'nitrogenCondition': ConditionNpk.Low,
+  //     'phosphorusCondition': ConditionNpk.Good,
+  //     'potassiumCondition': ConditionNpk.Low,
+  //     'plantGrowthStage': PlantGrowthStage.Vegetative
+  //   };
+  //   List<NotificationModel> notifications = [
+  //     NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
+  //         "Low Temperature : 11",
+  //         "The temperature of your plant is low, click on the notification tio see more details",
+  //         false, DateTime(2022,10,08)
+  //     ),
+  //     NotificationModel(id++, SensorType.moisture, MoistureStatus.Moisturized, 85,
+  //         "High Moisture : 85%",
+  //         "The soil is over moisturized, click on the notification tio see more details",
+  //         true, DateTime(2022,10,1)
+  //     ),
+  //     NotificationModel(id++, SensorType.pH, StatusPh.Acidic, 3.2,
+  //         "Low pH : 3.2",
+  //         "The soil is acidic, click on the notification tio see more details",
+  //         true, DateTime(2022,9,25)
+  //     ),
+  //     NotificationModel(id++, SensorType.npk, npkStatus, npkValue,
+  //         "NPK telemetry data problem",
+  //         "Click on the notification tio see more details",
+  //         true, DateTime(2022,8,16)
+  //     ),
+  //   ];
+  //   prefs.setString('notifications',jsonEncode(notifications));
+  //   print("SAVED");
+  // }
 
   void clearData(){
     prefs.remove('notifications');
@@ -255,56 +254,56 @@ class _NotificationsPageState extends State<NotificationsPage> {
     NotificationService().updateNotifications(notifications);
   }
 
-  List<NotificationModel> getFakeNotifications(){
-    int id = 0;
-    Map<String, dynamic> dht1Value = {
-      'temperature': 11,
-      'humidity': 80
-    };
-    Map<String, dynamic> npkValue = {
-      'nitrogenValue': 20.1,
-      'phosphorusValue': 30.5,
-      'potassiumValue': 28.3
-    };
-    Map<String, dynamic> npkStatus = {
-      'nitrogenCondition': ConditionNpk.Low,
-      'phosphorusCondition': ConditionNpk.Good,
-      'potassiumCondition': ConditionNpk.Low,
-      'plantGrowthStage': PlantGrowthStage.Vegetative
-    };
-    List<NotificationModel> notifications = [
-      NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
-          "Low Temperature : 11",
-          "The temperature of your plant is low, click on the notification tio see more details",
-          false, DateTime.now().subtract(Duration(hours: 8))
-      ),
-      NotificationModel(id++, SensorType.moisture, MoistureStatus.Moisturized, 85,
-          "High Moisture 85%",
-          "The soil is over moisturized, click on the notification tio see more details",
-          true, DateTime(2022,10,1,12,31)
-      ),
-      NotificationModel(id++, SensorType.pH, StatusPh.Acidic, 3.2,
-          "Low pH : 3.2",
-          "The soil is acidic, click on the notification tio see more details",
-          false, DateTime(2022,9,25,23,13)
-      ),
-      NotificationModel(id++, SensorType.npk, npkStatus, npkValue,
-          "NPK telemetry data problem",
-          "Click on the notification tio see more details",
-          true, DateTime(2022,8,16,07,6)
-      ),
-      NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
-          "High Temperature : 40",
-          "The temperature of your plant is low, click on the notification tio see more details",
-          true, DateTime(2022,8,03,10,18)
-      ),
-      NotificationModel(id++, SensorType.moisture, MoistureStatus.Moisturized, 85,
-          "High Moisture 85%",
-          "The soil is over moisturized, click on the notification tio see more details",
-          true, DateTime(2022,07,26,14,48)
-      ),
-    ];
-
-    return notifications;
-  }
+  // List<NotificationModel> getFakeNotifications(){
+  //   int id = 0;
+  //   Map<String, dynamic> dht1Value = {
+  //     'temperature': 11,
+  //     'humidity': 80
+  //   };
+  //   Map<String, dynamic> npkValue = {
+  //     'nitrogenValue': 20.1,
+  //     'phosphorusValue': 30.5,
+  //     'potassiumValue': 28.3
+  //   };
+  //   Map<String, dynamic> npkStatus = {
+  //     'nitrogenCondition': ConditionNpk.Low,
+  //     'phosphorusCondition': ConditionNpk.Good,
+  //     'potassiumCondition': ConditionNpk.Low,
+  //     'plantGrowthStage': PlantGrowthStage.Vegetative
+  //   };
+  //   List<NotificationModel> notifications = [
+  //     NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
+  //         "Low Temperature : 11",
+  //         "The temperature of your plant is low, click on the notification tio see more details",
+  //         false, DateTime.now().subtract(Duration(hours: 8))
+  //     ),
+  //     NotificationModel(id++, SensorType.moisture, MoistureStatus.Moisturized, 85,
+  //         "High Moisture 85%",
+  //         "The soil is over moisturized, click on the notification tio see more details",
+  //         true, DateTime(2022,10,1,12,31)
+  //     ),
+  //     NotificationModel(id++, SensorType.pH, StatusPh.Acidic, 3.2,
+  //         "Low pH : 3.2",
+  //         "The soil is acidic, click on the notification tio see more details",
+  //         false, DateTime(2022,9,25,23,13)
+  //     ),
+  //     NotificationModel(id++, SensorType.npk, npkStatus, npkValue,
+  //         "NPK telemetry data problem",
+  //         "Click on the notification tio see more details",
+  //         true, DateTime(2022,8,16,07,6)
+  //     ),
+  //     NotificationModel(id++, SensorType.dht11, StatusTemp.Low, dht1Value,
+  //         "High Temperature : 40",
+  //         "The temperature of your plant is low, click on the notification tio see more details",
+  //         true, DateTime(2022,8,03,10,18)
+  //     ),
+  //     NotificationModel(id++, SensorType.moisture, MoistureStatus.Moisturized, 85,
+  //         "High Moisture 85%",
+  //         "The soil is over moisturized, click on the notification tio see more details",
+  //         true, DateTime(2022,07,26,14,48)
+  //     ),
+  //   ];
+  //
+  //   return notifications;
+  // }
 }

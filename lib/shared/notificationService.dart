@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:internet_of_tomato_farming/main.dart';
 import 'package:internet_of_tomato_farming/pages/models/notification.model.dart';
@@ -26,6 +27,10 @@ class NotificationService {
 
   NotificationService._internal();
 
+  Future<void> initService() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
   Future<bool> initNotification() async {
      tz.initializeTimeZones();
      //tz.setLocalLocation(tz.getLocation(locationName));
@@ -49,10 +54,9 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
         onSelectNotification: (payload) async{
-          MyApp.homePageKey.currentState?.onNotificationLaunchApp();
+          // MyApp.homePageKey.currentState?.onNotificationLaunchApp();
         }
     );
-    prefs = await SharedPreferences.getInstance();
     final NotificationAppLaunchDetails? notificationAppLaunchDetails =
     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
     final didNotificationLaunchApp =
@@ -123,6 +127,54 @@ class NotificationService {
   void updateNotifications(List<NotificationModel> notifications) async{
     await prefs.setString('notifications',jsonEncode(notifications));
     MyApp.homePageKey.currentState!.setState(()=>null);
+  }
+
+  void savePushNotification(RemoteMessage message){
+    List<NotificationModel> notifications = getNotifications();
+    String id = message.messageId ?? DateTime.now().toIso8601String();
+
+    var sensor = message.data["Sensor"];
+    SensorType type = (sensor == "TempSoil" || sensor == "TempAir" || sensor == "Humidity") ? SensorType.dht11
+        : (sensor == "Moisture") ? SensorType.moisture
+        : (sensor == "Ph") ? SensorType.pH
+        : (sensor == "N" || sensor == "P" || sensor == "K") ? SensorType.npk : SensorType.npk ;
+
+    var status =
+        (type == SensorType.dht11)
+          ? (message.data["TypeOfAlert"]=="MIN") ? StatusTemp.Low : StatusTemp.High
+        : (type == SensorType.pH)
+          ? (message.data["TypeOfAlert"]=="MIN") ? StatusPh.Acidic : StatusPh.Alkaline
+        : (type == SensorType.moisture)
+          ? (message.data["TypeOfAlert"]=="MIN") ? MoistureStatus.Dry : MoistureStatus.Moisturized
+        :{
+          'nitrogenCondition': (message.data["TypeOfAlert"]=="MIN") ? ConditionNpk.Low : ConditionNpk.High,
+          'phosphorusCondition': (message.data["TypeOfAlert"]=="MIN") ? ConditionNpk.Low : ConditionNpk.High,
+          'potassiumCondition': (message.data["TypeOfAlert"]=="MIN") ? ConditionNpk.Low : ConditionNpk.High,
+          'plantGrowthStage': PlantGrowthStage.Flowering
+        };
+
+    var dht11Value = {
+      "temperature": (sensor == "TempSoil" || sensor == "TempAir") ? message.data["Value"] : "",
+      "humidity": (sensor == "Humidity") ? message.data["Value"] : "",
+    };
+
+    var value = (type != SensorType.npk)
+          ? (type == SensorType.dht11)
+            ? dht11Value
+            : message.data["Value"]
+        : {
+          'nitrogenValue': (sensor == "N") ? message.data["Value"] : "",
+          'phosphorusValue': (sensor == "P") ? message.data["Value"] : "",
+          'potassiumValue': (sensor == "K") ? message.data["Value"] : ""
+        };
+
+    var title = message.notification?.title ?? "";
+    var body = "";
+    var time = message.sentTime ?? DateTime.now();
+
+    NotificationModel notification = NotificationModel(id, type, status, value, title, body, false, time);
+    notifications.add(notification);
+    updateNotifications(notifications);
   }
 
   Future<void> saveNotification(id,type, status, value, title, body, seen, time) async{

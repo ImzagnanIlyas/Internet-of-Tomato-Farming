@@ -10,9 +10,9 @@ class NpkNotifDisplay extends StatefulWidget {
   ConditionNpk nitrogenCondition;
   ConditionNpk phosphorusCondition;
   ConditionNpk potassiumCondition;
-  double nitrogenValue;
-  double phosphorusValue;
-  double potassiumValue;
+  String nitrogenValue;
+  String phosphorusValue;
+  String potassiumValue;
   PlantGrowthStage plantGrowthStage;
 
 
@@ -40,9 +40,9 @@ class _NpkNotifDisplayState extends State<NpkNotifDisplay> {
   ConditionNpk nitrogenCondition;
   ConditionNpk phosphorusCondition;
   ConditionNpk potassiumCondition;
-  double nitrogenValue;
-  double phosphorusValue;
-  double potassiumValue;
+  String nitrogenValue;
+  String phosphorusValue;
+  String potassiumValue;
   PlantGrowthStage plantGrowthStage;
 
   _NpkNotifDisplayState(

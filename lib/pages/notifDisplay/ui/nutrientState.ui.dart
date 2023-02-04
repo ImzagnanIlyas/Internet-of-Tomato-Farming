@@ -26,7 +26,7 @@ class _NutrientStateState extends State<NutrientState> {
 
   _NutrientStateState(this.symbole, this.status, this.value);
 
-  var msg;
+  var msg ="";
   Color? color;
   var nutrient;
 

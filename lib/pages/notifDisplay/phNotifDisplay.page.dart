@@ -12,7 +12,10 @@ class PhNotifDisplay extends StatefulWidget {
 
 
   PhNotifDisplay(valuePh, this.phStatus){
-    this.valuePh = (valuePh.runtimeType == int) ? (valuePh as int).toDouble() : valuePh;
+    this.valuePh = (valuePh.runtimeType == int) 
+        ? (valuePh as int).toDouble() 
+        : (valuePh.runtimeType == String) ? double.parse((valuePh as String))
+          : valuePh;
   }
 
   @override
